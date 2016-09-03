@@ -1,0 +1,40 @@
+.top-bar-section li a:not(.button) {
+    background: #1976d2 !important;   
+}
+
+.top-bar-section li a:not(.button):hover {
+    background: #1565c0 !important;   
+}
+
+.top-bar-section ul li.active > a {
+    background: #0d47a1 !important;   
+}
+
+.top-bar-section ul li.active > a:hover {
+    background: #1565c0 !important;   
+}
+
+.box{
+    border:solid 1px #CCC;
+}
+.input-transparent{
+    background-color: transparent;
+    border:none;
+}
+
+input[type="text"].input-transparent::-webkit-input-placeholder {
+  color: white;
+}
+
+input[type="text"].input-transparent:-moz-placeholder {
+  color: white;
+}
+
+input[type="text"].input-transparent::-moz-placeholder {
+  color: white;
+}
+
+input[type="text"].input-transparent:-ms-input-placeholder  {
+  color: white;
+}
+

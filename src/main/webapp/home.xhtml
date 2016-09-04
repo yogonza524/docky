@@ -50,7 +50,7 @@
                 <pe:methodParam name="pid" />
             </pe:remoteCommand>
             
-            <pe:remoteCommand name="removeEntry" actionListener="#{home.removeEntry}">
+            <pe:remoteCommand name="deleteEntry" actionListener="#{home.removeEntry}">
                 <pe:methodSignature parameters="java.lang.String,java.lang.String,java.lang.String" />
                 <pe:methodParam name="pid" />
                 <pe:methodParam name="eid" />
@@ -108,16 +108,17 @@
                                 paginator="true"
                                 paginatorPosition="bottom"
                                 rows="10"
+                                sortOrder="descending"
                                 >
-                                <p:column headerText="Date" width="200">
+                                <p:column headerText="Created" width="200" sortBy="#{entry.date}">
                                     #{home.formatDate(entry.date)}
                                 </p:column>
                                 <p:column headerText="Entry" filterBy="#{entry.title}" filterMatchMode="contains">
-                                    #{entry.title}
+                                    <a href="#{request.contextPath}/faces/pages/view_entry.xhtml?pid=#{entry.id.idProject}&id=#{entry.id.id}" >#{entry.title}</a>
                                 </p:column>
-                                <p:column headerText="Action">
+                                <p:column headerText="Action" width="200">
                                     <a href="#{request.contextPath}/faces/pages/view_entry.xhtml" >View</a> | 
-                                    <a href="#" onclick="removeEntry('#{project.id}','#{entry.id}','#{entry.title}')">Remove</a>
+                                    <a href="#" onclick="removeEntry('#{project.id}','#{entry.id.id}','#{entry.title}')">Remove</a>
                                 </p:column>
                             </p:dataTable>
                         </ui:repeat>

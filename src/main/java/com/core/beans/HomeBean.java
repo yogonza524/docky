@@ -102,11 +102,13 @@ public class HomeBean {
     
     public void removeEntry(String pid, String eid, String name){
 //        showMessageWarning("Not implemented", "Please wait to implementation");
+        System.out.println("Pid: " + pid);
+        System.out.println("Eid: " + eid);
         if (eid != null && !eid.isEmpty()) {
             EntryId id = new EntryId(eid, pid);
             List<Criterion> restrictions = new ArrayList<>();
-            restrictions.add(Restrictions.eq("id", eid));
-            restrictions.add(Restrictions.eq("id_project", pid));
+            restrictions.add(Restrictions.eq("id.id", eid));
+            restrictions.add(Restrictions.eq("id.idProject", pid));
             Entry e = k.entityByRestrictions(restrictions, Entry.class);
             if (e != null) {
                 if (k.remove(e)) {

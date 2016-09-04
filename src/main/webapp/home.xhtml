@@ -35,7 +35,14 @@
         
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+        <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>-->
+        
+        <!--<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />-->
+        <!--<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />-->
+        
+<!--        <f:metadata>
+            <f:event type="preRenderView" listener="# { home.updateView()}" />
+        </f:metadata>-->
     </h:head>
     <h:body>
         
@@ -55,6 +62,12 @@
                 <pe:methodParam name="pid" />
                 <pe:methodParam name="eid" />
                 <pe:methodParam name="name" />
+            </pe:remoteCommand>
+            
+            <pe:remoteCommand name="setParams" actionListener="#{viewEntry.setParams}">
+                <pe:methodSignature parameters="java.lang.String,java.lang.String" />
+                <pe:methodParam name="pid" />
+                <pe:methodParam name="eid" />
             </pe:remoteCommand>
             
         </h:form>
@@ -112,8 +125,9 @@
                                 <p:column headerText="Created" width="200">
                                     #{home.formatDate(entry.date)}
                                 </p:column>
-                                <p:column filterBy="#{entry.title}" filterMatchMode="contains">
-                                    <a href="#{request.contextPath}/faces/pages/view_entry.xhtml?pid=#{entry.id.idProject}&amp;id=#{entry.id.id}" >#{entry.title}</a>
+                                <p:column headerText="Entries">
+<!--                                    <a onclick="setParams('#{entry.id.idProject}','#{entry.id.id}')" href="#{request.contextPath}/faces/pages/view_entry.xhtml?pid=#{entry.id.idProject}&amp;id=#{entry.id.id}" >#{entry.title}</a>-->
+                                    <p:commandLink value="#{entry.title}" actionListener="#{home.loadEntry(entry.id.idProject,entry.id.id)}" />
                                 </p:column>
                                 <p:column headerText="Action" width="200"> 
                                     <a href="#" onclick="removeEntry('#{project.id}','#{entry.id.id}','#{entry.title}')">Remove</a>
@@ -164,6 +178,9 @@
                     hljs.highlightBlock(e);
                 });
                 $(".ui-column-filter.ui-inputfield.ui-inputtext").attr("placeholder","Entries");
+//                $(".ui-column-filter.ui-inputfield.ui-inputtext").on("keyup",function(){
+//                    tableEntries.filter();
+//                });
             });
             function remove(pid, name){
                 swal({

@@ -17,7 +17,8 @@ public enum Tag {
     Header4("<h4>$</h4>"),
     Paragraph("<p>$</p>"),
     Code("<pre><code>$</code></pre>"),
-    Image("<img src='$' />")
+    Image("<img src='$' />"),
+    Link("<a href='$'></a>")
     ;
     
     private final String value;

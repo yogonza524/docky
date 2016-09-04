@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -41,6 +42,17 @@ public class IndexBean {
     private String pid;
     private Project p;
     private Kimera k;
+    
+    @ManagedProperty(value="#{home}")
+    private HomeBean home;
+
+    public HomeBean getHome() {
+        return home;
+    }
+
+    public void setHome(HomeBean home) {
+        this.home = home;
+    }
 
     public String getPid() {
         return pid;
@@ -140,6 +152,7 @@ public class IndexBean {
     }
     
     public void save(String title, String content) throws IOException, InterruptedException{
+        System.out.println("Content: " + content);
         if (title != null && !title.isEmpty()) {
             if (content != null && !content.isEmpty()) {
                 Entry e = new Entry();
@@ -149,7 +162,7 @@ public class IndexBean {
                     e.setId(id);
                     e.setDate(new Date());
                     e.setTitle(title);
-                    e.setContent(content);
+                    e.setContent(content.replaceAll("\"", "'"));
                     if (k.add(e)) {
                         p = null;
                         title = "";
@@ -158,6 +171,7 @@ public class IndexBean {
                         RequestContext.getCurrentInstance().update("title-form");
                         RequestContext.getCurrentInstance().update("preview-form");
                         showMessageSuccess("Great!", "New entry stored");
+                        home.updateView();
                         Thread.sleep(1000);
                         String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
                         FacesContext.getCurrentInstance().getExternalContext().redirect(path);

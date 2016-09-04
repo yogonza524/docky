@@ -99,6 +99,7 @@
                               <li><a onclick="add('Code')">Code</a></li>
                               <li><a onclick="add('Paragraph')">Paragraph</a></li>
                               <li><a onclick="add('Image')">Image</a></li>
+                              <li><a onclick="add('Link')">Link</a></li>
                           </ul>
                         </li>
                       </ul>
@@ -202,6 +203,13 @@
                                                 <p:ajax listener="#{index.setParam(c, 'class', index.aux)}" />
                                                 <f:selectItem itemLabel="Select the language" itemValue="" noSelectionOption="true" />
                                                 <f:selectItem itemLabel="Java" itemValue="java" />
+                                                <f:selectItem itemLabel="Css" itemValue="css" />
+                                                <f:selectItem itemLabel="HTML" itemValue="html" />
+                                                <f:selectItem itemLabel="Javascript" itemValue="js" />
+                                                <f:selectItem itemLabel="C#" itemValue="c#" />
+                                                <f:selectItem itemLabel="PHP" itemValue="php" />
+                                                <f:selectItem itemLabel="SQL" itemValue="sql" />
+                                                <f:selectItem itemLabel="XML" itemValue="xml" />
                                             </h:selectOneMenu>
                                             <p:inputTextarea style="border:none; box-shadow: none;margin-top:10px;" cols="20" value="#{c.value}" placeholder="Code">
                                                 <p:ajax event="keyup" listener="#{index.update(c)}" />
@@ -218,6 +226,20 @@
                                     <div class="row">
                                         <div class="columns small-12 large-11">
                                             <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="Image URL">
+                                                <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                            </p:inputText>
+                                        </div>
+                                        <div class="columns small-12 large-1">
+                                            <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                <i class="material-icons">close</i>
+                                            </p:commandLink>
+                                        </div>
+                                    </div>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{c.tag.Name() eq 'Link'}">
+                                    <div class="row">
+                                        <div class="columns small-12 large-11">
+                                            <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="URL">
                                                 <p:ajax event="keyup" listener="#{index.update(c)}" />
                                             </p:inputText>
                                         </div>
@@ -265,6 +287,9 @@
                                 <pre><code class="#{com.params.get('class')}">#{com.value}</code></pre>
                             </ui:fragment>
                             <ui:fragment rendered="#{com.tag.Name() eq 'Image'}">
+                                <img class="#{com.params.get('class')}" src="#{com.value}" />
+                            </ui:fragment>
+                            <ui:fragment rendered="#{com.tag.Name() eq 'Link'}">
                                 <img class="#{com.params.get('class')}" src="#{com.value}" />
                             </ui:fragment>
                         </ui:repeat>

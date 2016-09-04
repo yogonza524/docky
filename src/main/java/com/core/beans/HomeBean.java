@@ -10,6 +10,7 @@ import com.core.entities.Entry;
 import com.core.entities.EntryId;
 import com.core.entities.Project;
 import com.core.util.HibernateUtil;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,10 +20,15 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Whitelist;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -30,12 +36,35 @@ import org.primefaces.context.RequestContext;
  * @author gonza
  */
 @ManagedBean(name="home")
-@ViewScoped
+@SessionScoped
 public class HomeBean {
     
     private Kimera k;
     private List<Project> projects;
     private Project newProject;
+    private Entry entry;
+    private String eid;
+    private String pid;
+
+    public Entry getEntry() {
+        return entry;
+    }
+
+    public void setEntry(Entry entry) {
+        this.entry = entry;
+    }
+    
+    
+    @ManagedProperty(value="#{viewEntry}")
+    private ViewEntryBean viewEntry;
+
+    public ViewEntryBean getViewEntry() {
+        return viewEntry;
+    }
+
+    public void setViewEntry(ViewEntryBean viewEntry) {
+        this.viewEntry = viewEntry;
+    }
 
     public Project getNewProject() {
         return newProject;
@@ -160,5 +189,51 @@ public class HomeBean {
             }
         });
         return list;
+    }
+    
+    public void setParams(String pid, String eid){
+        this.eid = eid;
+        this.pid = pid;
+    }
+    
+    public void loadEntry(String pid, String eid) throws IOException{
+        setParams(pid, eid);
+//        System.out.println(pid);
+//        System.out.println(eid);
+        if (pid != null && eid != null) {
+            List<Criterion> restrictions = new ArrayList<>();
+            restrictions.add(Restrictions.eq("id.id", eid));
+            restrictions.add(Restrictions.eq("id.idProject", pid));
+            Entry e = k.entityByRestrictions(restrictions, Entry.class);
+//            System.out.println("Entry db: " + e);
+            if (e != null) {
+                this.entry = e;
+//                e.setContent(replaceCarriage(e.getContent()));
+                String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+                FacesContext.getCurrentInstance().getExternalContext().redirect(path + "/faces/pages/view_entry.xhtml?pid=" + pid + "&id=" + eid);
+            }
+            else{
+                showMessageError("Entry not found", "Verify the ID");
+            }
+        }
+        else{
+            System.out.println("params null");
+        }
+//        onload();
+    }
+    
+    public void updateView(){
+        projects = k.all(Project.class);
+//        update("projects-form");
+    }
+    
+    private String replaceCarriage(String html){
+        if(html==null) return html;
+        Document document = Jsoup.parse(html);
+        document.outputSettings(new Document.OutputSettings().prettyPrint(false));//makes html() preserve linebreaks and spacing
+        document.select("br").append("\\n");
+        document.select("p").prepend("\\n\\n");
+        String s = document.html().replaceAll("\\\\n", "\n");
+        return Jsoup.clean(s, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
     }
 }

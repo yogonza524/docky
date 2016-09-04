@@ -12,7 +12,7 @@
                 <column name="id_project" length="64" />
             </key-property>
         </composite-id>
-        <many-to-one name="project" class="com.core.entities.Project" update="false" insert="false" fetch="select">
+        <many-to-one name="project" lazy="false" class="com.core.entities.Project" update="false" insert="false" fetch="select">
             <column name="id_project" length="64" not-null="true" />
         </many-to-one>
         <property name="date" type="timestamp">

@@ -34,8 +34,57 @@
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         
+<!--        <f:metadata>
+            <f:event type="preRenderView" listener="# { viewEntry.onload()}" />
+        </f:metadata>-->
+        
     </h:head>
     <h:body>
-        <div>TODO write content</div>
+        
+        <nav class="top-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
+            <ul class="title-area">
+              <li class="name">
+                <h1><a href="#{request.contextPath}/">Docky</a></h1>
+              </li>
+               <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+              <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            </ul>
+            <ui:fragment rendered="#{not empty home.entry}">
+            <section class="top-bar-section">
+                <!-- Left Nav Section -->
+                <ul class="left">
+                    <li><a href="#">#{home.entry.project.name} project. Created at ${home.formatDate(home.entry.date)}</a></li>
+                </ul>
+            </section>
+            </ui:fragment>
+<!--            <section class="top-bar-section">
+               Right Nav Section 
+              <ul class="right">
+                  <li><a href="#" onclick="newEntry()">New</a></li>
+              </ul>
+            </section>-->
+          </nav>
+        
+        <h:form id="view">
+            <ui:fragment rendered="#{empty home.entry}">
+                <h3>The entry is empty</h3>
+            </ui:fragment>
+            <ui:fragment rendered="#{not empty home.entry}">
+                <div class="content-div row">
+                    <h:outputText escape="false" value="${home.entry.content}" />
+                </div>
+            </ui:fragment>
+        </h:form>
+        <script>
+            $(document).on("ready",function(){
+                
+            });
+            
+            function loadContent(content){
+                $('.content-div').html(content);
+            }
+            
+//            loadContent('$ {home.entry.content}'.replace(/[\n\r]/g, ''));
+        </script>
     </h:body>
 </html>

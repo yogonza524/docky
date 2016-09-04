@@ -41,6 +41,11 @@
             <version>6.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.yogonza524</groupId>
+            <artifactId>kimera</artifactId>
+            <version>1.0.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -98,6 +103,10 @@
             <id>PrimeFaces-maven-lib</id>
             <layout>default</layout>
             <name>Repository for library PrimeFaces-maven-lib</name>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 </project>

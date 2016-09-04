@@ -49,12 +49,13 @@
             </pe:remoteCommand>
             
             <pe:remoteCommand name="newEntry" actionListener="#{index.newEntry}" />
+            <pe:remoteCommand name="save" actionListener="#{index.save}" />
         </h:form>
         
         <nav class="top-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
   <ul class="title-area">
     <li class="name">
-      <h1><a href="#">Docky</a></h1>
+        <h1><a href="#{request.contextPath}/">Docky</a></h1>
     </li>
      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
     <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -64,6 +65,7 @@
     <!-- Right Nav Section -->
     <ul class="right">
         <li><a href="#" onclick="newEntry()">New</a></li>
+        <li><a href="#" onclick="save()">Save</a></li>
 <!--      <li class="has-dropdown">
         <a href="#">Right Button Dropdown</a>
         <ul class="dropdown">

@@ -28,6 +28,15 @@ public class IndexBean {
     private List<Component> components;
     private Tag[] tags;
     private Object aux;
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public Object getAux() {
         return aux;
@@ -84,13 +93,20 @@ public class IndexBean {
             RequestContext.getCurrentInstance().update("preview-form");
         }
         else{
-              showMessage("Error", "Component is empty");
+              showMessageError("Error", "Component is empty");
         }
     }
     
-    private void showMessage(String title, String message){
-        RequestContext.getCurrentInstance().execute("toastr.success('" + title + "', '" + message + "', {timeOut: 5000});");
-                
+    private void showMessageSuccess(String title, String message){
+        RequestContext.getCurrentInstance().execute("toastr.options.positionClass = 'toast-bottom-right';toastr.success('" + title + "', '" + message + "', {timeOut: 5000});");        
+    }
+    
+    private void showMessageWarning(String title, String message){
+        RequestContext.getCurrentInstance().execute("toastr.options.positionClass = 'toast-bottom-right';toastr.warning('" + title + "', '" + message + "', {timeOut: 5000});");        
+    }
+    
+    private void showMessageError(String title, String message){
+        RequestContext.getCurrentInstance().execute("toastr.options.positionClass = 'toast-bottom-right';toastr.error('" + title + "', '" + message + "', {timeOut: 5000});");        
     }
     
     public void newEntry(){
@@ -99,4 +115,15 @@ public class IndexBean {
         RequestContext.getCurrentInstance().update("preview-form");
         RequestContext.getCurrentInstance().update("components-form");
     }
+    
+    public void save(){
+        if (title != null && !title.isEmpty()) {
+            
+        }
+        else{
+            showMessageError("Title is mandatory", "Please put a title");
+        }
+    }
+    
+    
 }

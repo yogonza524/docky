@@ -72,7 +72,7 @@
                 <div class="panel">
                     <h:form id="projects-form">
                         <ui:repeat value="#{home.projects}" var="project">
-                            <h3>#{project.name}</h3>
+                            <h3>#{project.name}<small style="margin-left: 10px;"><a href="#{request.contextPath}/faces/pages/new_entry.xhtml?pid=#{project.id}">New entry</a></small></h3>
                             <p:dataTable 
                                 value="#{project.entries.toArray()}" 
                                 var="entry"
@@ -81,9 +81,12 @@
                                 paginator="true"
                                 paginatorPosition="bottom"
                                 rows="10"
+                                resizableColumns="true" 
+                                liveResize="true"
+                                resizeMode="expand"
                                 >
-                                <p:column headerText="Date">
-                                    #{entry.date}
+                                <p:column headerText="Date" width="200">
+                                    #{home.formatDate(entry.date)}
                                 </p:column>
                                 <p:column headerText="Entry">
                                     #{entry.title}

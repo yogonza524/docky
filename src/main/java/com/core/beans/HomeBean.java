@@ -8,10 +8,12 @@ package com.core.beans;
 import com.core.controller.Kimera;
 import com.core.entities.Project;
 import com.core.util.HibernateUtil;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.joda.time.DateTime;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -75,5 +77,10 @@ public class HomeBean {
     
     private void showMessageError(String title, String message){
         RequestContext.getCurrentInstance().execute("toastr.options.positionClass = 'toast-bottom-right';toastr.error('" + title + "', '" + message + "', {timeOut: 5000});");        
+    }
+    
+    public String formatDate(Date d){
+        DateTime time = new DateTime(d);
+        return time.getDayOfMonth() + "/" + (time.getMonthOfYear() < 10 ? "0" : "") + time.getMonthOfYear() + "/" + time.getYear();
     }
 }

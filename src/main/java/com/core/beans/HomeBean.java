@@ -84,6 +84,12 @@ public class HomeBean {
         RequestContext.getCurrentInstance().execute("toastr.options.positionClass = 'toast-bottom-right';toastr.error('" + title + "', '" + message + "', {timeOut: 5000});");        
     }
     
+    private void update(String... component){
+        for(String s : component){
+            RequestContext.getCurrentInstance().update("s");
+        }
+    }
+    
     public String formatDate(Date d){
         DateTime time = new DateTime(d);
         return time.getDayOfMonth() + "/" + (time.getMonthOfYear() < 10 ? "0" : "") + time.getMonthOfYear() + "/" + time.getYear();
@@ -91,5 +97,26 @@ public class HomeBean {
     
     public void removeEntry(String pid, Entry entry){
         showMessageWarning("Not implemented", "Please wait to implementation");
+    }
+    
+    public void deleteProject(String pid){
+        if (pid != null && !pid.isEmpty()) {
+            Project pro = k.entityById("id", pid, Project.class);
+            if (pro != null) {
+                if (k.remove(pro)) {
+                    showMessageSuccess("Remved", "The project was killed");
+                    update("projects-form");
+                }
+                else{
+                    showMessageError("Problems removing", "Intern error");
+                }
+            }
+            else{
+                showMessageError("Project to remove not found", "Please select a project");
+            }
+        }
+        else{
+            showMessageError("Project ID is empty", "Please put an PID");
+        }
     }
 }

@@ -44,6 +44,12 @@
                 <pe:methodSignature parameters="java.lang.String" />
                 <pe:methodParam name="pid" />
             </pe:remoteCommand>
+            
+            <pe:remoteCommand name="deleteProject" actionListener="#{index.deleteProject}">
+                <pe:methodSignature parameters="java.lang.String" />
+                <pe:methodParam name="pid" />
+            </pe:remoteCommand>
+            
         </h:form>
         
         <nav class="top-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
@@ -81,7 +87,12 @@
                 <div class="panel">
                     <h:form id="projects-form">
                         <ui:repeat value="#{home.projects}" var="project">
-                            <h3>#{project.name}<small style="margin-left: 10px;"><p:commandLink value="New entry" actionListener="#{index.view(project)}" /></small></h3>
+                            <h3>#{project.name}
+                                <small style="margin-left: 10px;">
+                                    <p:commandLink value="New entry" actionListener="#{index.view(project)}" /> |
+                                    <a href="#" onclick="remove('#{project.id}','#{project.name}')">Remove project</a>
+                                </small>
+                            </h3>
                             <p:dataTable 
                                 value="#{project.entries.toArray()}" 
                                 var="entry"
@@ -147,6 +158,27 @@
                     hljs.highlightBlock(e);
                 });
             });
+            function remove(pid, name){
+                swal({
+                    title: "Are you sure to remove " + name + " project?",
+                    text: "You will not be able to recover this project",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, remove it!",
+                    cancelButtonText: "No, cancel!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                  },
+                  function(isConfirm){
+                    if (isConfirm) {
+                        deleteProject(pid);
+//                      swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                    } else {
+                      swal("Cancelled", "Your project is safe :)", "error");
+                    }
+                  });
+            }
         </script>
     </h:body>
 </html>

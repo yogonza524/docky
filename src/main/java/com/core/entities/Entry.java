@@ -1,5 +1,5 @@
 package com.core.entities;
-// Generated 03/09/2016 21:35:15 by Hibernate Tools 4.3.1
+// Generated 03/09/2016 23:20:16 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -29,20 +29,23 @@ public class Entry  implements java.io.Serializable {
      private Project project;
      private Date date;
      private String content;
+     private String title;
 
     public Entry() {
     }
 
 	
-    public Entry(EntryId id, Project project) {
+    public Entry(EntryId id, Project project, String title) {
         this.id = id;
         this.project = project;
+        this.title = title;
     }
-    public Entry(EntryId id, Project project, Date date, String content) {
+    public Entry(EntryId id, Project project, Date date, String content, String title) {
        this.id = id;
        this.project = project;
        this.date = date;
        this.content = content;
+       this.title = title;
     }
    
      @EmbeddedId
@@ -87,6 +90,16 @@ public class Entry  implements java.io.Serializable {
     
     public void setContent(String content) {
         this.content = content;
+    }
+
+    
+    @Column(name="title", nullable=false, length=512)
+    public String getTitle() {
+        return this.title;
+    }
+    
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 

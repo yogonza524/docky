@@ -73,12 +73,27 @@
                     <h:form id="projects-form">
                         <ui:repeat value="#{home.projects}" var="project">
                             <h3>#{project.name}</h3>
-                            <p:dataTable value="#{project.entries}" var="entry">
-                                <p:column headerText="Entry">
-                                    #{entry.name}
+                            <p:dataTable 
+                                value="#{project.entries.toArray()}" 
+                                var="entry"
+                                emptyMessage="No entries found"
+                                paginatorAlwaysVisible="false"
+                                paginator="true"
+                                paginatorPosition="bottom"
+                                rows="10"
+                                >
+                                <p:column headerText="Date">
+                                    #{entry.date}
                                 </p:column>
-                                <p:column headerText="Description">
-                                    #{entry.description}
+                                <p:column headerText="Entry">
+                                    #{entry.title}
+                                </p:column>
+                                <p:column headerText="Action">
+                                    <ul class="button-group">
+                                        <li><a href="#" class="button"><i class="material-icons">play_arrow</i></a></li>
+                                        <li><a href="#" class="button"><i class="material-icons">border_color</i></a></li>
+                                        <li><a href="#" class="button"><i class="material-icons">close</i></a></li>
+                                    </ul>
                                 </p:column>
                             </p:dataTable>
                         </ui:repeat>

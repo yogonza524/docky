@@ -1,5 +1,5 @@
 #surefire
-#Sun Sep 04 00:07:42 ART 2016
+#Sun Sep 04 00:14:04 ART 2016
 enableAssertions=true
 testSuiteDefinitionTestSourceDirectory=/home/gonza/Desarrollos/Github/docky/src/test/java
 surefireClassPathUrl.1=/home/gonza/.m2/repository/org/apache/maven/surefire/surefire-api/2.10/surefire-api-2.10.jar

@@ -117,7 +117,9 @@ public class IndexBean {
         RequestContext.getCurrentInstance().update("components-form");
     }
     
-    public void save(String content){
+    public void save(String title, String content){
+        System.out.println("Title: " + title);
+        System.out.println("Content: " + content);
         if (title != null && !title.isEmpty()) {
             showMessageSuccess("Great", "Just wait a second");
         }

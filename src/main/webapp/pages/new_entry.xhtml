@@ -50,7 +50,8 @@
             
             <pe:remoteCommand name="newEntry" actionListener="#{index.newEntry}" />
             <pe:remoteCommand name="save" actionListener="#{index.save}">
-                <pe:methodSignature parameters="java.lang.String" />
+                <pe:methodSignature parameters="java.lang.String,java.lang.String" />
+                <pe:methodParam name="title" />
                 <pe:methodParam name="content" />
             </pe:remoteCommand>
         </h:form>
@@ -68,7 +69,7 @@
     <!-- Right Nav Section -->
     <ul class="right">
         <li><a href="#" onclick="newEntry()">New</a></li>
-        <li><a href="#" onclick="validateEntry()">Save</a></li>
+        <li><a href="#" onclick="validateEntry()    ">Save</a></li>
 <!--      <li class="has-dropdown">
         <a href="#">Right Button Dropdown</a>
         <ul class="dropdown">
@@ -289,7 +290,7 @@
             });
             
             function validateEntry(){
-                save($('#content-preview'));
+                save($('input["title-form:title"]').val(),$('#content-preview').html());
             }
         </script>
     </h:body>

@@ -11,8 +11,11 @@ import com.core.entities.EntryId;
 import com.core.entities.Project;
 import com.core.util.HibernateUtil;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -149,5 +152,16 @@ public class HomeBean {
         else{
             showMessageError("Project ID is empty", "Please put an PID");
         }
+    }
+    
+    public List sort(Set set){
+        List<String> list = new ArrayList<>(set);
+        Collections.sort(list, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        return list;
     }
 }

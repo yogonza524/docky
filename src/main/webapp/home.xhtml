@@ -101,7 +101,7 @@
                                 </small>
                             </h3>
                             <p:dataTable 
-                                value="#{project.entries.toArray()}" 
+                                value="#{home.sort(project.entries.toArray())}" 
                                 var="entry"
                                 emptyMessage="No entries found"
                                 paginatorAlwaysVisible="false"
@@ -110,14 +110,13 @@
                                 rows="10"
                                 sortOrder="descending"
                                 >
-                                <p:column headerText="Created" width="200" sortBy="#{entry.date}">
+                                <p:column headerText="Created" width="200" sortBy="#{home.formatDate(entry.date)}">
                                     #{home.formatDate(entry.date)}
                                 </p:column>
                                 <p:column headerText="Entry" filterBy="#{entry.title}" filterMatchMode="contains">
-                                    <a href="#{request.contextPath}/faces/pages/view_entry.xhtml?pid=#{entry.id.idProject}&id=#{entry.id.id}" >#{entry.title}</a>
+                                    <a href="#{request.contextPath}/faces/pages/view_entry.xhtml?pid=#{entry.id.idProject}&amp;id=#{entry.id.id}" >#{entry.title}</a>
                                 </p:column>
-                                <p:column headerText="Action" width="200">
-                                    <a href="#{request.contextPath}/faces/pages/view_entry.xhtml" >View</a> | 
+                                <p:column headerText="Action" width="200"> 
                                     <a href="#" onclick="removeEntry('#{project.id}','#{entry.id.id}','#{entry.title}')">Remove</a>
                                 </p:column>
                             </p:dataTable>

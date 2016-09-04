@@ -122,8 +122,11 @@ public class IndexBean {
         }
         else{
             showMessageError("Title is mandatory", "Please put a title");
+            focusJQueryComponent("input[id='title-form:title']");
         }
     }
     
-    
+    public void focusJQueryComponent(String comp){
+        RequestContext.getCurrentInstance().execute("$('" + comp +"').focus();");
+    }
 }

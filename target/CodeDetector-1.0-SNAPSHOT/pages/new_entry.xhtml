@@ -34,11 +34,6 @@
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         
-        <f:metadata>
-            <f:viewParam id="id" name="id" value="#{index.pid}" required="true" />
-            <f:event type="preRenderView" listener="#{index.findProject}" />
-        </f:metadata>
-        
     </h:head>
     <h:body>
         
@@ -74,7 +69,7 @@
     <!-- Right Nav Section -->
     <ul class="right">
         <li><a href="#" onclick="newEntry()">New</a></li>
-        <li><a href="#" onclick="validateEntry()    ">Save</a></li>
+        <li><a href="#" onclick="validateEntry()">Save</a></li>
 <!--      <li class="has-dropdown">
         <a href="#">Right Button Dropdown</a>
         <ul class="dropdown">
@@ -99,11 +94,11 @@
                       <!-- Right Nav Section -->
                       <ul class="right">
                         <li class="has-dropdown">
-                          <a href="#">Components</a>
+                          <a>Components</a>
                           <ul class="dropdown">
-                              <li><a href="#" onclick="add('Code')">Code</a></li>
-                              <li><a href="#" onclick="add('Paragraph')">Paragraph</a></li>
-                              <li><a href="#" onclick="add('Image')">Image</a></li>
+                              <li><a onclick="add('Code')">Code</a></li>
+                              <li><a onclick="add('Paragraph')">Paragraph</a></li>
+                              <li><a onclick="add('Image')">Image</a></li>
                           </ul>
                         </li>
                       </ul>
@@ -112,10 +107,10 @@
                         <li class="has-dropdown">
                           <a href="#">Headers</a>
                           <ul class="dropdown">
-                              <li><a href="#" onclick="add('Header1')">Header1</a></li>
-                              <li><a href="#" onclick="add('Header2')">Header2</a></li>
-                              <li><a href="#" onclick="add('Header3')">Header3</a></li>
-                              <li><a href="#" onclick="add('Header4')">Header4</a></li>
+                              <li><a onclick="add('Header1')">Header1</a></li>
+                              <li><a onclick="add('Header2')">Header2</a></li>
+                              <li><a onclick="add('Header3')">Header3</a></li>
+                              <li><a onclick="add('Header4')">Header4</a></li>
                           </ul>
                         </li>
                       </ul>

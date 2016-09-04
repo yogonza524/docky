@@ -19,6 +19,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -134,8 +135,6 @@ public class IndexBean {
     }
     
     public void save(String title, String content){
-        System.out.println("Title: " + title);
-        System.out.println("Content: " + content);
         if (title != null && !title.isEmpty()) {
             if (content != null && !content.isEmpty()) {
                 Entry e = new Entry();
@@ -156,18 +155,20 @@ public class IndexBean {
     }
     
     public void findProject(){
-        if (pid != null && !pid.isEmpty()) {
-            p = k.entityById("id", pid, Project.class);
-            if (p != null) {
-                //your code here
-                showMessageSuccess("Project setted", "Success");
+        if (!FacesContext.getCurrentInstance().isPostback()) {
+            if (pid != null && !pid.isEmpty()) {
+                p = k.entityById("id", pid, Project.class);
+                if (p != null) {
+                    //your code here
+                    showMessageSuccess("Project setted", "Success");
+                }
+                else{
+                    showMessageError("The project doesn't exist", "Checkout the PID");
+                }
             }
             else{
-                showMessageError("The project doesn't exist", "Checkout the PID");
+                showMessageError("Project ID is mandatory", "Please send the PID");
             }
-        }
-        else{
-            showMessageError("Project ID is mandatory", "Please send the PID");
         }
     }
 }

@@ -37,6 +37,13 @@
     </h:head>
     <h:body>
         
+        <h:form id="commands">
+            <pe:remoteCommand name="setPid" actionListener="#{index.setPid}">
+                <pe:methodSignature parameters="java.lang.String" />
+                <pe:methodParam name="pid" />
+            </pe:remoteCommand>
+        </h:form>
+        
         <nav class="top-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
             <ul class="title-area">
               <li class="name">
@@ -62,7 +69,7 @@
           </nav>
         
         <ul class="tabs" data-tab="true">
-            <li class="tab-title active"><a href="#panel1">Projects</a></li>
+            <li class="tab-title active"><a id="projects_link" href="#panel1">Projects</a></li>
             <li class="tab-title"><a href="#panel2">New Project</a></li>
             <li class="tab-title"><a href="#panel3">Tab 3</a></li>
             <li class="tab-title"><a href="#panel4">Tab 4</a></li>
@@ -72,7 +79,7 @@
                 <div class="panel">
                     <h:form id="projects-form">
                         <ui:repeat value="#{home.projects}" var="project">
-                            <h3>#{project.name}<small style="margin-left: 10px;"><a href="#{request.contextPath}/faces/pages/new_entry.xhtml?pid=#{project.id}">New entry</a></small></h3>
+                            <h3>#{project.name}<small style="margin-left: 10px;"><a onclick="setPid('#{project.id}')" href="#{request.contextPath}/faces/pages/new_entry.xhtml?pid=#{project.id}">New entry</a></small></h3>
                             <p:dataTable 
                                 value="#{project.entries.toArray()}" 
                                 var="entry"
@@ -111,7 +118,7 @@
                                                   <p:inputTextarea value="#{home.newProject.description}" placeholder="Description of project" rows="5" />
                                               </div>
                                               <div class="columns small-12">
-                                                  <p:commandLink actionListener="#{home.addEntry()}" style="margin-top: 10px;" styleClass="button" value="Create" />
+                                                  <p:commandLink actionListener="#{home.addProject()}" style="margin-top: 10px;" styleClass="button" value="Create" />
                                               </div>
                                         </div>
                                     </h:form>

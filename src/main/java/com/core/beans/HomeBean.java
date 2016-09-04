@@ -52,12 +52,14 @@ public class HomeBean {
         this.projects = projects;
     }
     
-    public void addEntry(){
+    public void addProject(){
         if (newProject.getName() != null && !newProject.getName().isEmpty()) {
             if (k.add(newProject)) {
                 newProject = new Project();
                 showMessageSuccess("Added", "Congratulations!");
                 RequestContext.getCurrentInstance().update("new_project_form");
+                RequestContext.getCurrentInstance().update("projects-form");
+                RequestContext.getCurrentInstance().execute("$('#projects_link').trigger('click')");
             }
             else{
                 showMessageError("Problems adding", "Your project doesn't added");

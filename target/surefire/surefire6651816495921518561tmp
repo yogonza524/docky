@@ -1,7 +1,0 @@
-#surefire
-#Sun Sep 04 00:23:34 ART 2016
-maven.ext.class.path=/usr/local/netbeans-8.1/java/maven-nblib/netbeans-eventspy.jar
-user.dir=/home/gonza/Desarrollos/Github/docky
-localRepository=/home/gonza/.m2/repository
-netbeans.deploy=true
-basedir=/home/gonza/Desarrollos/Github/docky

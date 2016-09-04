@@ -45,9 +45,16 @@
                 <pe:methodParam name="pid" />
             </pe:remoteCommand>
             
-            <pe:remoteCommand name="deleteProject" actionListener="#{index.deleteProject}">
+            <pe:remoteCommand name="deleteProject" actionListener="#{home.deleteProject}">
                 <pe:methodSignature parameters="java.lang.String" />
                 <pe:methodParam name="pid" />
+            </pe:remoteCommand>
+            
+            <pe:remoteCommand name="removeEntry" actionListener="#{home.removeEntry}">
+                <pe:methodSignature parameters="java.lang.String,java.lang.String,java.lang.String" />
+                <pe:methodParam name="pid" />
+                <pe:methodParam name="eid" />
+                <pe:methodParam name="name" />
             </pe:remoteCommand>
             
         </h:form>
@@ -110,7 +117,7 @@
                                 </p:column>
                                 <p:column headerText="Action">
                                     <a href="#{request.contextPath}/faces/pages/view_entry.xhtml" >View</a> | 
-                                    <p:commandLink value="Remove" actionListener="#{home.removeEntry(project.id, entry)}" />
+                                    <a href="#" onclick="removeEntry('#{project.id}','#{entry.id}','#{entry.title}')">Remove</a>
                                 </p:column>
                             </p:dataTable>
                         </ui:repeat>
@@ -119,23 +126,23 @@
             </div>
             <div class="content" id="panel2">
               <div class="panel">
-                                    <h:form id="new_project_form">
-                                        <div class="row">
-                                              <div class="columns small-12">
-                                                  <p>Tell me about your project</p>
-                                              </div> 
-                                              <div class="columns small-12">
-                                                  <p:inputText placeholder="Name" value="#{home.newProject.name}" />
-                                              </div>
-                                              <div class="columns small-12">
-                                                  <p:inputTextarea value="#{home.newProject.description}" placeholder="Description of project" rows="5" />
-                                              </div>
-                                              <div class="columns small-12">
-                                                  <p:commandLink actionListener="#{home.addProject()}" style="margin-top: 10px;" styleClass="button" value="Create" />
-                                              </div>
-                                        </div>
-                                    </h:form>
-                                </div>
+                <h:form id="new_project_form">
+                    <div class="row">
+                          <div class="columns small-12">
+                              <p>Tell me about your project</p>
+                          </div> 
+                          <div class="columns small-12">
+                              <p:inputText placeholder="Name" value="#{home.newProject.name}" />
+                          </div>
+                          <div class="columns small-12">
+                              <p:inputTextarea value="#{home.newProject.description}" placeholder="Description of project" rows="5" />
+                          </div>
+                          <div class="columns small-12">
+                              <p:commandLink actionListener="#{home.addProject()}" style="margin-top: 10px;" styleClass="button" value="Create" />
+                          </div>
+                    </div>
+                </h:form>
+            </div>
             </div>
 <!--            <div class="content" id="panel3">
               <p>This is the third panel of the basic tab example. This is the third panel of the basic tab example.</p>
@@ -147,7 +154,7 @@
         
         <div class="footerholder">
             <div class="footer">
-            Gonzalo H. Mendoza CEO of Div-ID Software
+            Gonzalo H. Mendoza. Div-ID Software
             © 2016 All rights reserved
             </div>
         </div>
@@ -167,16 +174,39 @@
                     confirmButtonColor: "#DD6B55",
                     confirmButtonText: "Yes, remove it!",
                     cancelButtonText: "No, cancel!",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
+                    closeOnConfirm: true,
+                    closeOnCancel: true
                   },
                   function(isConfirm){
                     if (isConfirm) {
                         deleteProject(pid);
 //                      swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                    } else {
-                      swal("Cancelled", "Your project is safe :)", "error");
-                    }
+                    } 
+//                    else {
+//                      swal("Cancelled", "Your project is safe :)", "error");
+//                    }
+                  });
+            }
+            function removeEntry(pid, eid, name){
+                swal({
+                    title: "Are you sure to remove " + name + "?",
+                    text: "You will not be able to recover this entry",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, remove it!",
+                    cancelButtonText: "No, cancel!",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                  },
+                  function(isConfirm){
+                    if (isConfirm) {
+                        deleteEntry(pid, eid, name);
+//                      swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                    } 
+//                    else {
+//                      swal("Cancelled", "Your project is safe :)", "error");
+//                    }
                   });
             }
         </script>

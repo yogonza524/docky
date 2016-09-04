@@ -7,14 +7,18 @@ package com.core.beans;
 
 import com.core.controller.Kimera;
 import com.core.entities.Entry;
+import com.core.entities.EntryId;
 import com.core.entities.Project;
 import com.core.util.HibernateUtil;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
 import org.primefaces.context.RequestContext;
 
@@ -86,7 +90,8 @@ public class HomeBean {
     
     private void update(String... component){
         for(String s : component){
-            RequestContext.getCurrentInstance().update("s");
+            System.out.println("Updating: " + s);
+            RequestContext.getCurrentInstance().update(s);
         }
     }
     
@@ -95,8 +100,31 @@ public class HomeBean {
         return time.getDayOfMonth() + "/" + (time.getMonthOfYear() < 10 ? "0" : "") + time.getMonthOfYear() + "/" + time.getYear();
     }
     
-    public void removeEntry(String pid, Entry entry){
-        showMessageWarning("Not implemented", "Please wait to implementation");
+    public void removeEntry(String pid, String eid, String name){
+//        showMessageWarning("Not implemented", "Please wait to implementation");
+        if (eid != null && !eid.isEmpty()) {
+            EntryId id = new EntryId(eid, pid);
+            List<Criterion> restrictions = new ArrayList<>();
+            restrictions.add(Restrictions.eq("id", eid));
+            restrictions.add(Restrictions.eq("id_project", pid));
+            Entry e = k.entityByRestrictions(restrictions, Entry.class);
+            if (e != null) {
+                if (k.remove(e)) {
+                    showMessageSuccess("Removed", "The entry was killed");
+                    projects = k.all(Project.class);
+                    update("projects-form");
+                }
+                else{
+                    showMessageError("Problems removing", "Intern error");
+                }
+            }
+            else{
+                showMessageError("Entry to remove not found", "Please select a entry");
+            }
+        }
+        else{
+            showMessageError("Entry ID is empty", "Please put an ID");
+        }
     }
     
     public void deleteProject(String pid){
@@ -104,7 +132,8 @@ public class HomeBean {
             Project pro = k.entityById("id", pid, Project.class);
             if (pro != null) {
                 if (k.remove(pro)) {
-                    showMessageSuccess("Remved", "The project was killed");
+                    showMessageSuccess("Removed", "The project was killed");
+                    projects = k.all(Project.class);
                     update("projects-form");
                 }
                 else{

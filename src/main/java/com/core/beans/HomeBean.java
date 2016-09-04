@@ -6,6 +6,7 @@
 package com.core.beans;
 
 import com.core.controller.Kimera;
+import com.core.entities.Entry;
 import com.core.entities.Project;
 import com.core.util.HibernateUtil;
 import java.util.Date;
@@ -82,5 +83,9 @@ public class HomeBean {
     public String formatDate(Date d){
         DateTime time = new DateTime(d);
         return time.getDayOfMonth() + "/" + (time.getMonthOfYear() < 10 ? "0" : "") + time.getMonthOfYear() + "/" + time.getYear();
+    }
+    
+    public void removeEntry(String pid, Entry entry){
+        showMessageWarning("Not implemented", "Please wait to implementation");
     }
 }

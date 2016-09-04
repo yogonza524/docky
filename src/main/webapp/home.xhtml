@@ -89,11 +89,8 @@
                                     #{entry.title}
                                 </p:column>
                                 <p:column headerText="Action">
-                                    <ul class="button-group">
-                                        <li><a href="#" class="button"><i class="material-icons">play_arrow</i></a></li>
-                                        <li><a href="#" class="button"><i class="material-icons">border_color</i></a></li>
-                                        <li><a href="#" class="button"><i class="material-icons">close</i></a></li>
-                                    </ul>
+                                    <a href="#{request.contextPath}/face/page/view_entry.xhtml" >View</a> | 
+                                    <p:commandLink value="Remove" actionListener="#{home.removeEntry(project.id, entry)}" />
                                 </p:column>
                             </p:dataTable>
                         </ui:repeat>

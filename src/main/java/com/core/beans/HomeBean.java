@@ -12,6 +12,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -46,5 +47,26 @@ public class HomeBean {
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+    
+    public void addEntry(){
+        if (newProject.getName() != null && !newProject.getName().isEmpty()) {
+            
+        }
+        else{
+            showMessageError("Name is mandatory", "Please insert a name");
+        }
+    }
+    
+    private void showMessageSuccess(String title, String message){
+        RequestContext.getCurrentInstance().execute("toastr.options.positionClass = 'toast-bottom-right';toastr.success('" + title + "', '" + message + "', {timeOut: 5000});");        
+    }
+    
+    private void showMessageWarning(String title, String message){
+        RequestContext.getCurrentInstance().execute("toastr.options.positionClass = 'toast-bottom-right';toastr.warning('" + title + "', '" + message + "', {timeOut: 5000});");        
+    }
+    
+    private void showMessageError(String title, String message){
+        RequestContext.getCurrentInstance().execute("toastr.options.positionClass = 'toast-bottom-right';toastr.error('" + title + "', '" + message + "', {timeOut: 5000});");        
     }
 }

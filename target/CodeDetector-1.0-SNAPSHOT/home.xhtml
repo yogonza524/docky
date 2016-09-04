@@ -72,19 +72,26 @@
               <p>
               <div class="row">
                   <div class="columns small-12 medium-6 large-6">
-                      <div class="callout">
+                      
+                  </div>
+                  <div class="columns small-12 medium-6 large-6">
+                      <div class="panel">
                           <p>New project</p>
                           <h:form id="new_project_form">
                               <div class="row">
                                     <div class="columns small-12">
-                                        <p:inputText style="border:none; box-shadow: none" placeholder="Name">
-                                        </p:inputText>
+                                        <p:inputText placeholder="Name" />
+                                    </div>
+                                    <div class="columns small-12">
+                                        <p:inputTextarea placeholder="Description of project" rows="5" />
+                                    </div>
+                                    <div class="columns small-12">
+                                        <p:commandLink style="margin-top: 10px;" styleClass="button" value="Create" />
                                     </div>
                               </div>
                           </h:form>
                       </div>
                   </div>
-                  <div class="columns small-12 medium-6 large-6"></div>
               </div>
               </p>
             </div>

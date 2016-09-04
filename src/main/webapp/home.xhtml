@@ -29,7 +29,9 @@
         
         <h:outputStylesheet library="css" name="app.css" />
         <h:outputStylesheet library="css" name="toastr.css" />
+        <h:outputStylesheet library="css" name="sweetalert.css" />
         <h:outputScript library="js" name="toastr.js" />
+        <h:outputScript library="js" name="sweetalert.min.js" />
         
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -92,7 +94,7 @@
                                 <p:column headerText="Date" width="200">
                                     #{home.formatDate(entry.date)}
                                 </p:column>
-                                <p:column headerText="Entry">
+                                <p:column headerText="Entry" filterBy="#{entry.title}" filterMatchMode="contains">
                                     #{entry.title}
                                 </p:column>
                                 <p:column headerText="Action">

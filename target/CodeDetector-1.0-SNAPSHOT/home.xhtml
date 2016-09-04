@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pe="http://primefaces.org/ui/extensions">
     <h:head>
-        <title>Docky 1.0.0</title>
+        <title>Docky</title>
         <link rel="icon" href="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png" />
         <meta charset="utf-8" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -99,13 +99,24 @@
         <ul class="tabs" data-tab="true">
             <li class="tab-title active"><a id="projects_link" href="#panel1">Projects</a></li>
             <li class="tab-title"><a href="#panel2">New Project</a></li>
-<!--            <li class="tab-title"><a href="#panel3">Tab 3</a></li>
-            <li class="tab-title"><a href="#panel4">Tab 4</a></li>-->
+            <li class="tab-title"><a href="#panel3">About</a></li>
+            <!--<li class="tab-title"><a href="#panel4">Tab 4</a></li>-->
           </ul>
           <div class="tabs-content">
             <div class="content active" id="panel1">
                 <div class="panel">
                     <h:form id="projects-form">
+                        <ui:fragment rendered="#{empty home.projects}">
+                            <div class="row">
+                                <div class="columns small-6">
+                                    <h3 style="color:#CCC;">Projects not found</h3>
+                                    <p style="color:#CCC;">You can add a new project in the "New Proyect" tab</p>
+                                </div>
+                                <div class="columns small-6">
+                                    <h:graphicImage library="img" name="h.png" />
+                                </div>
+                            </div>
+                        </ui:fragment>
                         <ui:repeat value="#{home.projects}" var="project">
                             <h3>#{project.name}
                                 <small style="margin-left: 10px;">
@@ -157,10 +168,21 @@
                 </h:form>
             </div>
             </div>
-<!--            <div class="content" id="panel3">
-              <p>This is the third panel of the basic tab example. This is the third panel of the basic tab example.</p>
+            <div class="content" id="panel3">
+                <div class="panel">
+                    <h4>Docky is powered by Gonzalo H. Mendoza</h4>
+                    <p>The project consist in a tiny tool for maintain code of a lot of projects. </p>
+                    <p>Each project has zero or more entries. An entry has one or more components. The components 
+                        are only HTML tags with information inside. Just that
+                    </p>
+                    <p>
+                        <a href="http://idsoft.com.ar/">Checkout Div ID Software page</a><br />
+                        <a href="https://www.facebook.com/dividsoftware/">Checkout Div ID Software on Facebook</a><br />
+                        <a href="https://github.com/yogonza524/docky">Github Repo of Docky</a>
+                    </p>
+                </div>
             </div>
-            <div class="content" id="panel4">
+<!--            <div class="content" id="panel4">
               <p>This is the fourth panel of the basic tab example. This is the fourth panel of the basic tab example.</p>
             </div>-->
           </div>

@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pe="http://primefaces.org/ui/extensions">
     <h:head>
-        <title>Docky 1.0.0</title>
+        <title>Docky</title>
         <link rel="icon" href="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png" />
         <meta charset="utf-8" />
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -53,7 +53,7 @@
             <section class="top-bar-section">
                 <!-- Left Nav Section -->
                 <ul class="left">
-                    <li><a href="#">#{home.entry.project.name} project. Created at ${home.formatDate(home.entry.date)}</a></li>
+                    <li><a href="#">#{home.entry.project.name} project. Entry created at ${home.formatDate(home.entry.date)} with title '#{home.entry.title}'</a></li>
                 </ul>
             </section>
             </ui:fragment>
@@ -75,6 +75,12 @@
                 </div>
             </ui:fragment>
         </h:form>
+        <div class="footerholder">
+            <div class="footer">
+            Gonzalo H. Mendoza. Div-ID Software
+            © 2016 All rights reserved
+            </div>
+        </div>
         <script>
             $(document).on("ready",function(){
                 

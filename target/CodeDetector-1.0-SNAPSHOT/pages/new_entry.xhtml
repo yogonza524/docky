@@ -49,7 +49,10 @@
             </pe:remoteCommand>
             
             <pe:remoteCommand name="newEntry" actionListener="#{index.newEntry}" />
-            <pe:remoteCommand name="save" actionListener="#{index.save}" />
+            <pe:remoteCommand name="save" actionListener="#{index.save}">
+                <pe:methodSignature parameters="java.lang.String" />
+                <pe:methodParam name="content" />
+            </pe:remoteCommand>
         </h:form>
         
         <nav class="top-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
@@ -239,30 +242,32 @@
                 </nav>
                 
                 <h:form id="preview-form">
-                    <ui:repeat value="#{index.components}" var="com">
-                        <br />
-                        <ui:fragment rendered="#{com.tag.Name() eq 'Header1'}">
-                            <h1>#{com.value}</h1>
-                        </ui:fragment>
-                        <ui:fragment rendered="#{com.tag.Name() eq 'Header2'}">
-                            <h2>#{com.value}</h2>
-                        </ui:fragment>
-                        <ui:fragment rendered="#{com.tag.Name() eq 'Header3'}">
-                            <h3>#{com.value}</h3>
-                        </ui:fragment>
-                        <ui:fragment rendered="#{com.tag.Name() eq 'Header4'}">
-                            <h4>#{com.value}</h4>
-                        </ui:fragment>
-                        <ui:fragment rendered="#{com.tag.Name() eq 'Paragraph'}">
-                            <p>#{com.value}</p>
-                        </ui:fragment>
-                        <ui:fragment rendered="#{com.tag.Name() eq 'Code'}">
-                            <pre><code class="#{com.params.get('class')}">#{com.value}</code></pre>
-                        </ui:fragment>
-                        <ui:fragment rendered="#{com.tag.Name() eq 'Image'}">
-                            <img class="#{com.params.get('class')}" src="#{com.value}" />
-                        </ui:fragment>
-                    </ui:repeat>
+                    <div id="content-preview">
+                        <ui:repeat value="#{index.components}" var="com">
+                            <br />
+                            <ui:fragment rendered="#{com.tag.Name() eq 'Header1'}">
+                                <h1>#{com.value}</h1>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{com.tag.Name() eq 'Header2'}">
+                                <h2>#{com.value}</h2>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{com.tag.Name() eq 'Header3'}">
+                                <h3>#{com.value}</h3>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{com.tag.Name() eq 'Header4'}">
+                                <h4>#{com.value}</h4>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{com.tag.Name() eq 'Paragraph'}">
+                                <p>#{com.value}</p>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{com.tag.Name() eq 'Code'}">
+                                <pre><code class="#{com.params.get('class')}">#{com.value}</code></pre>
+                            </ui:fragment>
+                            <ui:fragment rendered="#{com.tag.Name() eq 'Image'}">
+                                <img class="#{com.params.get('class')}" src="#{com.value}" />
+                            </ui:fragment>
+                        </ui:repeat>
+                    </div>
                 </h:form>
             </div>
         </div>
@@ -282,6 +287,10 @@
                     }, 100);
                   });
             });
+            
+            function validateEntry(){
+                save($('#content-preview'));
+            }
         </script>
     </h:body>
 </html>

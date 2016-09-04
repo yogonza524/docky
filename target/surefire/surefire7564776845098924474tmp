@@ -1,5 +1,5 @@
 #surefire
-#Sat Sep 03 23:58:30 ART 2016
+#Sun Sep 04 00:05:06 ART 2016
 maven.ext.class.path=/usr/local/netbeans-8.1/java/maven-nblib/netbeans-eventspy.jar
 user.dir=/home/gonza/Desarrollos/Github/docky
 localRepository=/home/gonza/.m2/repository

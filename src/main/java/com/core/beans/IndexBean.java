@@ -116,9 +116,9 @@ public class IndexBean {
         RequestContext.getCurrentInstance().update("components-form");
     }
     
-    public void save(){
+    public void save(String content){
         if (title != null && !title.isEmpty()) {
-            
+            showMessageSuccess("Great", "Just wait a second");
         }
         else{
             showMessageError("Title is mandatory", "Please put a title");

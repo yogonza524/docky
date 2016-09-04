@@ -37,27 +37,74 @@
     </h:head>
     <h:body>
         
+        <nav class="top-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
+            <ul class="title-area">
+              <li class="name">
+                <h1><a href="#">Docky</a></h1>
+              </li>
+               <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+              <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            </ul>
+
+            <!--<section class="top-bar-section">-->
+              <!-- Right Nav Section -->
+              <!--<ul class="right">-->
+                  <!--<li><a href="#" onclick="newEntry()">New</a></li>-->
+          <!--      <li class="has-dropdown">
+                  <a href="#">Right Button Dropdown</a>
+                  <ul class="dropdown">
+                    <li><a href="#">First link in dropdown</a></li>
+                    <li class="active"><a href="#">Active link in dropdown</a></li>
+                  </ul>
+                </li>-->
+              <!--</ul>-->
+            <!--</section>-->
+          </nav>
         
-        <ul class="tabs vertical" data-tab>
-            <li class="tab-title active"><a href="#panel11">Tab 1</a></li>
-            <li class="tab-title"><a href="#panel21">Tab 2</a></li>
-            <li class="tab-title"><a href="#panel31">Tab 3</a></li>
-            <li class="tab-title"><a href="#panel41">Tab 4</a></li>
+        <ul class="tabs vertical" data-tab="true">
+            <li class="tab-title active"><a href="#panel11">Projects</a></li>
+            <li class="tab-title"><a href="#panel21">About</a></li>
+<!--            <li class="tab-title"><a href="#panel31">Tab 3</a></li>
+            <li class="tab-title"><a href="#panel41">Tab 4</a></li>-->
           </ul>
           <div class="tabs-content">
             <div class="content active" id="panel11">
-              <p>This is the first panel of the basic tab example. You can place all sorts of content here including a grid.</p>
+              <p>
+              <div class="row">
+                  <div class="columns small-12 medium-6 large-6">
+                      <div class="callout">
+                          <p>New project</p>
+                          <h:form id="new_project_form">
+                              <div class="row">
+                                    <div class="columns small-12">
+                                        <p:inputText style="border:none; box-shadow: none" placeholder="Name">
+                                        </p:inputText>
+                                    </div>
+                              </div>
+                          </h:form>
+                      </div>
+                  </div>
+                  <div class="columns small-12 medium-6 large-6"></div>
+              </div>
+              </p>
             </div>
             <div class="content" id="panel21">
               <p>This is the second panel of the basic tab example. This is the second panel of the basic tab example.</p>
             </div>
-            <div class="content" id="panel31">
+<!--            <div class="content" id="panel31">
               <p>This is the third panel of the basic tab example. This is the third panel of the basic tab example.</p>
             </div>
             <div class="content" id="panel41">
               <p>This is the fourth panel of the basic tab example. This is the fourth panel of the basic tab example.</p>
-            </div>
+            </div>-->
           </div>
+        
+        <div class="footerholder">
+            <div class="footer">
+            Gonzalo H. Mendoza CEO of Div-ID Software
+            © 2016 All rights reserved
+            </div>
+        </div>
         <script>
             $(document).on("ready",function(){
                $(document).foundation(); 

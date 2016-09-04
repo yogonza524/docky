@@ -38,3 +38,17 @@ input[type="text"].input-transparent:-ms-input-placeholder  {
   color: white;
 }
 
+.footerholder {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    color: #CCC;
+}
+
+.footer {
+    background: none repeat scroll 0 0;
+    margin: auto;
+    width: 100%;
+}

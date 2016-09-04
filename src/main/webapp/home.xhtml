@@ -35,7 +35,7 @@
         
         <!--Import Google Icon Font-->
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-        
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
     </h:head>
     <h:body>
         
@@ -112,7 +112,7 @@
                                 <p:column headerText="Created" width="200">
                                     #{home.formatDate(entry.date)}
                                 </p:column>
-                                <p:column headerText="Entry" filterBy="#{entry.title}" filterMatchMode="contains">
+                                <p:column filterBy="#{entry.title}" filterMatchMode="contains">
                                     <a href="#{request.contextPath}/faces/pages/view_entry.xhtml?pid=#{entry.id.idProject}&amp;id=#{entry.id.id}" >#{entry.title}</a>
                                 </p:column>
                                 <p:column headerText="Action" width="200"> 
@@ -163,6 +163,7 @@
                $("pre").each(function (i, e) {
                     hljs.highlightBlock(e);
                 });
+                $(".ui-column-filter.ui-inputfield.ui-inputtext").attr("placeholder","Entries");
             });
             function remove(pid, name){
                 swal({

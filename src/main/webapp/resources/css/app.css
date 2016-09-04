@@ -52,3 +52,10 @@ input[type="text"].input-transparent:-ms-input-placeholder  {
     margin: auto;
     width: 100%;
 }
+
+.ui-column-filter.ui-inputfield.ui-inputtext{
+    border:none;
+    width:100%;
+    box-shadow: none;
+    background-color: transparent;
+}

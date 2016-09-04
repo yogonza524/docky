@@ -66,6 +66,7 @@ public class IndexBean {
     public void init(){
         components = new ArrayList<>();
         tags = Tag.values();
+        title = "";
     }
     
     public void add(String component){

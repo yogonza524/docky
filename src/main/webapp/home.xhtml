@@ -93,13 +93,13 @@
                                                   <p>Tell me about your project</p>
                                               </div> 
                                               <div class="columns small-12">
-                                                  <p:inputText placeholder="Name" />
+                                                  <p:inputText placeholder="Name" value="#{home.newProject.name}" />
                                               </div>
                                               <div class="columns small-12">
-                                                  <p:inputTextarea placeholder="Description of project" rows="5" />
+                                                  <p:inputTextarea value="#{home.newProject.description}" placeholder="Description of project" rows="5" />
                                               </div>
                                               <div class="columns small-12">
-                                                  <p:commandLink style="margin-top: 10px;" styleClass="button" value="Create" />
+                                                  <p:commandLink actionListener="#{home.addEntry()}" style="margin-top: 10px;" styleClass="button" value="Create" />
                                               </div>
                                         </div>
                                     </h:form>

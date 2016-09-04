@@ -51,7 +51,14 @@ public class HomeBean {
     
     public void addEntry(){
         if (newProject.getName() != null && !newProject.getName().isEmpty()) {
-            
+            if (k.add(newProject)) {
+                newProject = new Project();
+                showMessageSuccess("Added", "Congratulations!");
+                RequestContext.getCurrentInstance().update("new_project_form");
+            }
+            else{
+                showMessageError("Problems adding", "Your project doesn't added");
+            }
         }
         else{
             showMessageError("Name is mandatory", "Please insert a name");

@@ -57,6 +57,7 @@ public class HomeBean {
             if (k.add(newProject)) {
                 newProject = new Project();
                 showMessageSuccess("Added", "Congratulations!");
+                projects = k.all(Project.class);
                 RequestContext.getCurrentInstance().update("new_project_form");
                 RequestContext.getCurrentInstance().update("projects-form");
                 RequestContext.getCurrentInstance().execute("$('#projects_link').trigger('click')");

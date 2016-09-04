@@ -110,7 +110,7 @@ public class IndexBean {
     
     public void setParam(Component c, String key, String value){
         if (c != null) {
-            System.out.println("\n" + c.getParams().get(key) + " - " + key + ": " + value + "\n");
+//            System.out.println("\n" + c.getParams().get(key) + " - " + key + ": " + value + "\n");
             c.getParams().put(key, value);
             Collections.replaceAll(components, c, c);
             RequestContext.getCurrentInstance().update("preview-form");
@@ -203,7 +203,7 @@ public class IndexBean {
     
     public void view(Project project) throws IOException{
         this.p = project;
-        System.out.println("Project: " + project.getName());
+//        System.out.println("Project: " + project.getName());
         String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
         FacesContext.getCurrentInstance().getExternalContext().redirect(path + "/faces/pages/new_entry.xhtml?pid=" + p.getId());
     }

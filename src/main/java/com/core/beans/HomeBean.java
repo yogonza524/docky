@@ -93,20 +93,17 @@ public class HomeBean {
     
     private void update(String... component){
         for(String s : component){
-            System.out.println("Updating: " + s);
             RequestContext.getCurrentInstance().update(s);
         }
     }
     
     public String formatDate(Date d){
         DateTime time = new DateTime(d);
-        return time.getDayOfMonth() + "/" + (time.getMonthOfYear() < 10 ? "0" : "") + time.getMonthOfYear() + "/" + time.getYear();
+        return time.getDayOfMonth() + "/" + (time.getMonthOfYear() < 10 ? "0" : "") + time.getMonthOfYear() + "/" + time.getYear() + " " + (time.getHourOfDay() < 9? "0" : "") + time.getHourOfDay() + ":" + (time.getMinuteOfHour() < 9? "0" : "") + time.getMinuteOfHour();
     }
     
     public void removeEntry(String pid, String eid, String name){
 //        showMessageWarning("Not implemented", "Please wait to implementation");
-        System.out.println("Pid: " + pid);
-        System.out.println("Eid: " + eid);
         if (eid != null && !eid.isEmpty()) {
             EntryId id = new EntryId(eid, pid);
             List<Criterion> restrictions = new ArrayList<>();
@@ -155,11 +152,11 @@ public class HomeBean {
     }
     
     public List sort(Set set){
-        List<String> list = new ArrayList<>(set);
-        Collections.sort(list, new Comparator<String>() {
+        List<Entry> list = new ArrayList<>(set);
+        Collections.sort(list, new Comparator<Entry>() {
             @Override
-            public int compare(String o1, String o2) {
-                return o1.compareTo(o2);
+            public int compare(Entry o1, Entry o2) {
+                return o2.getDate().compareTo(o1.getDate());
             }
         });
         return list;

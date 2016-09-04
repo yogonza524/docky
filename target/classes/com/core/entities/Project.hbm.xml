@@ -6,7 +6,7 @@
     <class name="com.core.entities.Project" table="project" schema="public" optimistic-lock="version">
         <id name="id" type="string">
             <column name="id" length="64" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="name" type="string">
             <column name="name" length="128" not-null="true" />
@@ -14,7 +14,7 @@
         <property name="description" type="string">
             <column name="description" length="1024" />
         </property>
-        <set name="entries" table="entry" inverse="true" lazy="true" fetch="select">
+        <set name="entries" table="entry" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="id_project" length="64" not-null="true" />
             </key>

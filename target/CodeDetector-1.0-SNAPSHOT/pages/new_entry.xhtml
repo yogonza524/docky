@@ -290,7 +290,7 @@
                                 <img class="#{com.params.get('class')}" src="#{com.value}" />
                             </ui:fragment>
                             <ui:fragment rendered="#{com.tag.Name() eq 'Link'}">
-                                <img class="#{com.params.get('class')}" src="#{com.value}" />
+                                <a href="#{com.value}">#{com.value}</a>
                             </ui:fragment>
                         </ui:repeat>
                     </div>

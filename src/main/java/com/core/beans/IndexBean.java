@@ -5,8 +5,12 @@
  */
 package com.core.beans;
 
+import com.core.controller.Kimera;
+import com.core.entities.Entry;
+import com.core.entities.Project;
 import com.core.enums.Tag;
 import com.core.model.Component;
+import com.core.util.HibernateUtil;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +33,17 @@ public class IndexBean {
     private Tag[] tags;
     private Object aux;
     private String title;
+    private String pid;
+    private Project p;
+    private Kimera k;
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
 
     public String getTitle() {
         return title;
@@ -67,6 +82,7 @@ public class IndexBean {
         components = new ArrayList<>();
         tags = Tag.values();
         title = "";
+        k = new Kimera(HibernateUtil.getSessionFactory());
     }
     
     public void add(String component){
@@ -121,7 +137,13 @@ public class IndexBean {
         System.out.println("Title: " + title);
         System.out.println("Content: " + content);
         if (title != null && !title.isEmpty()) {
-            showMessageSuccess("Great", "Just wait a second");
+            if (content != null && !content.isEmpty()) {
+                Entry e = new Entry();
+                showMessageSuccess("Great", "Just wait a second");
+            }
+            else{
+                showMessageError("Bad content", "Please insert some content");
+            }
         }
         else{
             showMessageError("Title is mandatory", "Please put a title");
@@ -131,5 +153,21 @@ public class IndexBean {
     
     public void focusJQueryComponent(String comp){
         RequestContext.getCurrentInstance().execute("$('" + comp +"').focus();");
+    }
+    
+    public void findProject(){
+        if (pid != null && !pid.isEmpty()) {
+            p = k.entityById("id", pid, Project.class);
+            if (p != null) {
+                //your code here
+                showMessageSuccess("Project setted", "Success");
+            }
+            else{
+                showMessageError("The project doesn't exist", "Checkout the PID");
+            }
+        }
+        else{
+            showMessageError("Project ID is mandatory", "Please send the PID");
+        }
     }
 }

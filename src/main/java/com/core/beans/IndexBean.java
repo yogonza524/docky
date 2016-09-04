@@ -7,6 +7,7 @@ package com.core.beans;
 
 import com.core.controller.Kimera;
 import com.core.entities.Entry;
+import com.core.entities.EntryId;
 import com.core.entities.Project;
 import com.core.enums.Tag;
 import com.core.model.Component;
@@ -15,6 +16,7 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -138,6 +140,28 @@ public class IndexBean {
         if (title != null && !title.isEmpty()) {
             if (content != null && !content.isEmpty()) {
                 Entry e = new Entry();
+                if (p != null) {
+                    EntryId id = new EntryId();
+                    id.setIdProject(p.getId());
+                    e.setId(id);
+                    e.setDate(new Date());
+                    e.setTitle(title);
+                    e.setContent(content);
+                    if (k.add(e)) {
+                        p = null;
+                        title = "";
+                        components = new ArrayList<>();
+                        RequestContext.getCurrentInstance().update("components-form");
+                        RequestContext.getCurrentInstance().update("title-form");
+                        RequestContext.getCurrentInstance().update("preview-form");
+                        showMessageSuccess("Great!", "New entry stored");
+                    }
+                    else{
+                        showMessageError("Problems adding entry", "Intern error");
+                    }
+                }else{
+                    showMessageError("Project empty", "I need a project ID");
+                }
                 showMessageSuccess("Great", "Just wait a second");
             }
             else{

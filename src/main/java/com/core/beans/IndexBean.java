@@ -12,6 +12,7 @@ import com.core.entities.Project;
 import com.core.enums.Tag;
 import com.core.model.Component;
 import com.core.util.HibernateUtil;
+import java.io.IOException;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
@@ -29,7 +31,7 @@ import org.primefaces.context.RequestContext;
  * @author gonzalo
  */
 @ManagedBean(name="index")
-@ViewScoped
+@SessionScoped
 public class IndexBean {
     
     private List<Component> components;
@@ -86,6 +88,7 @@ public class IndexBean {
         tags = Tag.values();
         title = "";
         k = new Kimera(HibernateUtil.getSessionFactory());
+        findProject();
     }
     
     public void add(String component){
@@ -136,7 +139,7 @@ public class IndexBean {
         RequestContext.getCurrentInstance().update("components-form");
     }
     
-    public void save(String title, String content){
+    public void save(String title, String content) throws IOException, InterruptedException{
         if (title != null && !title.isEmpty()) {
             if (content != null && !content.isEmpty()) {
                 Entry e = new Entry();
@@ -155,6 +158,9 @@ public class IndexBean {
                         RequestContext.getCurrentInstance().update("title-form");
                         RequestContext.getCurrentInstance().update("preview-form");
                         showMessageSuccess("Great!", "New entry stored");
+                        Thread.sleep(1000);
+                        String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+                        FacesContext.getCurrentInstance().getExternalContext().redirect(path);
                     }
                     else{
                         showMessageError("Problems adding entry", "Intern error");
@@ -162,7 +168,6 @@ public class IndexBean {
                 }else{
                     showMessageError("Project empty", "I need a project ID");
                 }
-                showMessageSuccess("Great", "Just wait a second");
             }
             else{
                 showMessageError("Bad content", "Please insert some content");
@@ -194,5 +199,12 @@ public class IndexBean {
                 showMessageError("Project ID is mandatory", "Please send the PID");
             }
         }
+    }
+    
+    public void view(Project project) throws IOException{
+        this.p = project;
+        System.out.println("Project: " + project.getName());
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(path + "/faces/pages/new_entry.xhtml?pid=" + p.getId());
     }
 }

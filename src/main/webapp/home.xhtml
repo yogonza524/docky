@@ -79,7 +79,7 @@
                 <div class="panel">
                     <h:form id="projects-form">
                         <ui:repeat value="#{home.projects}" var="project">
-                            <h3>#{project.name}<small style="margin-left: 10px;"><a onclick="setPid('#{project.id}')" href="#{request.contextPath}/faces/pages/new_entry.xhtml?pid=#{project.id}">New entry</a></small></h3>
+                            <h3>#{project.name}<small style="margin-left: 10px;"><p:commandLink value="New entry" actionListener="#{index.view(project)}" /></small></h3>
                             <p:dataTable 
                                 value="#{project.entries.toArray()}" 
                                 var="entry"
@@ -96,7 +96,7 @@
                                     #{entry.title}
                                 </p:column>
                                 <p:column headerText="Action">
-                                    <a href="#{request.contextPath}/faces/page/view_entry.xhtml" >View</a> | 
+                                    <a href="#{request.contextPath}/faces/pages/view_entry.xhtml" >View</a> | 
                                     <p:commandLink value="Remove" actionListener="#{home.removeEntry(project.id, entry)}" />
                                 </p:column>
                             </p:dataTable>

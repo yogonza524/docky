@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.4
 -- Dumped by pg_dump version 9.5.4
 
--- Started on 2016-09-03 23:26:49 ART
+-- Started on 2016-09-04 17:26:07 ART
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,6 @@ SET search_path = public, pg_catalog;
 -- Data for Name: entry; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO entry (id, id_project, date, content, title) VALUES ('ccbb033b56c2f0dd78027d16c02a7832', '6977ae5858d621f26da2a375a220e6ed', '2016-09-03 23:23:59.061652-03', 'dadasd', 'Ejemplo');
 
 
 --
@@ -32,7 +31,6 @@ INSERT INTO entry (id, id_project, date, content, title) VALUES ('ccbb033b56c2f0
 -- Data for Name: project; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO project (id, name, description) VALUES ('6977ae5858d621f26da2a375a220e6ed', 'Bingo', 'For essenTIT');
 
 
 SET default_tablespace = '';
@@ -80,7 +78,7 @@ ALTER TABLE ONLY entry
     ADD CONSTRAINT entry_fk FOREIGN KEY (id_project) REFERENCES project(id) ON DELETE CASCADE;
 
 
--- Completed on 2016-09-03 23:26:49 ART
+-- Completed on 2016-09-04 17:26:07 ART
 
 --
 -- PostgreSQL database dump complete

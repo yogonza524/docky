@@ -107,6 +107,7 @@ public class IndexBean {
         Tag t = Tag.valueOf(component);
         components.add(new Component(t, ""));
         RequestContext.getCurrentInstance().update("components-form");
+        RequestContext.getCurrentInstance().execute("$(document.body).css({'height':$(document.body).css('height') + 40 + 'px'});");
     }
     
     public void remove(Component c){

@@ -98,7 +98,7 @@
         
         <ul class="tabs" data-tab="true">
             <li class="tab-title active"><a id="projects_link" href="#panel1">Projects</a></li>
-            <li class="tab-title"><a href="#panel2">New Project</a></li>
+            <li class="tab-title"><a id="new_project_btn" href="#panel2">New Project</a></li>
             <li class="tab-title"><a href="#panel3">About</a></li>
             <!--<li class="tab-title"><a href="#panel4">Tab 4</a></li>-->
           </ul>
@@ -108,17 +108,21 @@
                     <h:form id="projects-form">
                         <ui:fragment rendered="#{empty home.projects}">
                             <div class="row">
-                                <div class="columns small-6">
-                                    <h3 style="color:#CCC;">Projects not found</h3>
-                                    <p style="color:#CCC;">You can add a new project in the "New Proyect" tab</p>
+                                <div class="columns small-3">
+                                    <!--<h:graphicImage library="img" name="h.png" />-->
+                                    <img src="http://paginas.fe.up.pt/~ee08163/images/documents.png" />
                                 </div>
-                                <div class="columns small-6">
-                                    <h:graphicImage library="img" name="h.png" />
+                                <div class="columns small-9">
+                                    <h3>Projects not found</h3>
+                                    <p>
+                                        Start by creating a project, it is simple and fast . What are you waiting for
+                                    </p>
+                                    <a href="#" onclick="selectNewProject()" class="btn-green">Create a first project</a>
                                 </div>
                             </div>
                         </ui:fragment>
                         <ui:repeat value="#{home.projects}" var="project">
-                            <h3>#{project.name}
+                            <h3 title="#{project.description}">#{project.name}
                                 <small style="margin-left: 10px;">
                                     <p:commandLink value="New entry" actionListener="#{index.view(project)}" /> |
                                     <a href="#" onclick="remove('#{project.id}','#{project.name}')">Delete project</a>
@@ -153,13 +157,13 @@
                 <h:form id="new_project_form">
                     <div class="row">
                           <div class="columns small-12">
-                              <p>Tell me about your project</p>
+                              <p>Project data</p>
                           </div> 
                           <div class="columns small-12">
-                              <p:inputText placeholder="Name" value="#{home.newProject.name}" />
+                              <p:inputText id="new_project_name" placeholder="Name" value="#{home.newProject.name}" />
                           </div>
                           <div class="columns small-12">
-                              <p:inputTextarea value="#{home.newProject.description}" placeholder="Description of project" rows="5" />
+                              <p:inputTextarea value="#{home.newProject.description}" placeholder="Description" rows="5" />
                           </div>
                           <div class="columns small-12">
                               <p:commandLink actionListener="#{home.addProject()}" style="margin-top: 10px;" styleClass="button" value="Create" />
@@ -204,6 +208,12 @@
 //                    tableEntries.filter();
 //                });
             });
+            
+            function selectNewProject(){
+                $('#new_project_btn').trigger('click');
+                $('input[id="new_project_form:new_project_name"]').focus();
+            }
+            
             function remove(pid, name){
                 swal({
                     title: "Are you sure to remove " + name + " project?",

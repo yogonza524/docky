@@ -121,7 +121,7 @@
                             <h3>#{project.name}
                                 <small style="margin-left: 10px;">
                                     <p:commandLink value="New entry" actionListener="#{index.view(project)}" /> |
-                                    <a href="#" onclick="remove('#{project.id}','#{project.name}')">Remove project</a>
+                                    <a href="#" onclick="remove('#{project.id}','#{project.name}')">Delete project</a>
                                 </small>
                             </h3>
                             <p:dataTable 
@@ -133,14 +133,14 @@
                                 paginatorPosition="bottom"
                                 rows="10"
                                 >
-                                <p:column headerText="Created" width="200">
+                                <p:column headerText="Created" width="200" style="border:none; text-align: center;">
                                     #{home.formatDate(entry.date)}
                                 </p:column>
-                                <p:column headerText="Entries">
+                                <p:column headerText="Entries" style="border:none;">
 <!--                                    <a onclick="setParams('#{entry.id.idProject}','#{entry.id.id}')" href="#{request.contextPath}/faces/pages/view_entry.xhtml?pid=#{entry.id.idProject}&amp;id=#{entry.id.id}" >#{entry.title}</a>-->
                                     <p:commandLink value="#{entry.title}" actionListener="#{home.loadEntry(entry.id.idProject,entry.id.id)}" />
                                 </p:column>
-                                <p:column headerText="Action" width="200"> 
+                                <p:column headerText="Action" width="200" style="border:none;text-align: center;"> 
                                     <a href="#" onclick="removeEntry('#{project.id}','#{entry.id.id}','#{entry.title}')">Remove</a>
                                 </p:column>
                             </p:dataTable>

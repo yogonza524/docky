@@ -107,7 +107,8 @@ public class IndexBean {
         Tag t = Tag.valueOf(component);
         components.add(new Component(t, ""));
         RequestContext.getCurrentInstance().update("components-form");
-        RequestContext.getCurrentInstance().execute("$(document.body).css({'height':$(document.body).css('height') + 40 + 'px'});");
+        RequestContext.getCurrentInstance().execute("$('#callout-components').scrollTop($('#callout-components')[0].scrollHeight);");
+        RequestContext.getCurrentInstance().execute("$('.input_c:last:first').focus()");
     }
     
     public void remove(Component c){
@@ -171,9 +172,9 @@ public class IndexBean {
                         RequestContext.getCurrentInstance().update("components-form");
                         RequestContext.getCurrentInstance().update("title-form");
                         RequestContext.getCurrentInstance().update("preview-form");
-                        showMessageSuccess("Great!", "New entry stored");
+//                        showMessageSuccess("Great!", "New entry stored");
                         home.updateView();
-                        Thread.sleep(1000);
+                        components = new ArrayList<>();
                         String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
                         FacesContext.getCurrentInstance().getExternalContext().redirect(path);
                     }

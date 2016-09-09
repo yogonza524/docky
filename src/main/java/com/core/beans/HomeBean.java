@@ -10,20 +10,32 @@ import com.core.entities.Entry;
 import com.core.entities.EntryId;
 import com.core.entities.Project;
 import com.core.util.HibernateUtil;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
+import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
@@ -31,6 +43,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -46,6 +61,25 @@ public class HomeBean {
     private Entry entry;
     private String eid;
     private String pid;
+    private UploadedFile file;
+    private final String directory = "/usr/local/share/uploads";
+    private List<StreamedContent> files;
+
+    public List<StreamedContent> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<StreamedContent> files) {
+        this.files = files;
+    }
+ 
+    public UploadedFile getFile() {
+        return file;
+    }
+ 
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
     
     public Entry getEntry() {
         return entry;
@@ -80,6 +114,11 @@ public class HomeBean {
         k = new Kimera(HibernateUtil.getSessionFactory());
         projects = k.all(Project.class);
         newProject = new Project();
+        try {
+            listFiles();
+        } catch (IOException ex) {
+            showMessageError("List file error", ex.getMessage());
+        }
     }
 
     public List<Project> getProjects() {
@@ -228,13 +267,83 @@ public class HomeBean {
 //        update("projects-form");
     }
     
-    private String replaceCarriage(String html){
-        if(html==null) return html;
-        Document document = Jsoup.parse(html);
-        document.outputSettings(new Document.OutputSettings().prettyPrint(false));//makes html() preserve linebreaks and spacing
-        document.select("br").append("\\n");
-        document.select("p").prepend("\\n\\n");
-        String s = document.html().replaceAll("\\\\n", "\n");
-        return Jsoup.clean(s, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
+    public void upload() {
+        if(file != null) {
+            //create an InputStream from the uploaded file
+            InputStream inputStr = null;
+            try {
+                inputStr = file.getInputstream();
+            } catch (IOException e) {
+                //log error
+            }
+            
+            File dir = new File(directory);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            
+            String filename = FilenameUtils.getName(file.getFileName());
+            File destFile = new File(directory, filename);
+
+            //use org.apache.commons.io.FileUtils to copy the File
+            try {
+                FileUtils.copyInputStreamToFile(inputStr, destFile);
+                showMessageSuccess("Success!", file.getFileName() + " is uploaded.");
+                listFiles();
+                update("list_files");
+            } catch (IOException e) {
+                //log error
+                showMessageError("Upload exception", e.getMessage());
+            }
+        }
+        else{
+            System.out.println("File null!");
+        }
+    }
+    
+    public void listFiles() throws IOException{
+        files = new ArrayList<>();
+        listFilesForFolder(new File(directory));
+        update("list_files");
+    }
+    
+    public void listFilesForFolder(final File folder) throws IOException {
+    for (final File fileEntry : folder.listFiles()) {
+        if (fileEntry.isDirectory()) {
+            listFilesForFolder(fileEntry);
+        } 
+        else {
+            InputStream stream = new FileInputStream(new File(directory + "/" + fileEntry.getName()));
+            StreamedContent f = new DefaultStreamedContent(stream, Files.probeContentType(fileEntry.toPath()), fileEntry.getName());
+            files.add(f);
+            }
+        }
+    }
+    
+    public String fileToURL(StreamedContent file) throws MalformedURLException{
+        String output = "";
+        if (file != null) {
+            output = new File(directory + "/" + file.getName()).toURI().toURL().toString();
+            System.out.println(output);
+        }
+        return output;
+    }
+    
+    public StreamedContent loadImage(StreamedContent img) throws IOException {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+            // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+            return img;
+        }
+        return img;
+    }
+    
+    public String subString(String name){
+        String output = name;
+        if (name != null && !name.isEmpty() && name.length() > 10) {
+            output = name.substring(0,10) + "...";
+        }
+        return output;
     }
 }

@@ -1,0 +1,394 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <h:head>
+        <title>Docky</title>
+        <link rel="icon" href="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png" />
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        
+        <h:outputStylesheet library="foundation-5/css" name="foundation.css" />
+        <h:outputStylesheet library="foundation-5/css" name="normalize.css" />
+        
+        <h:outputScript library="foundation-5/js/vendor" name="jquery.js" />
+        
+        <h:outputScript library="foundation-5/js/vendor" name="modernizr.js" />
+        
+        <h:outputScript library="foundation-5/js" name="foundation.min.js" />
+        
+        <!--<script src="https://cdn.jsdelivr.net/foundation/6.2.3/js/foundation.core.js"></script>-->
+        <!--<script src="https://cdn.jsdelivr.net/foundation/6.2.3/js/foundation.sticky.js"></script>-->
+        <!--<script src="https://cdn.jsdelivr.net/foundation/6.2.3/js/foundation.util.triggers.js"></script>-->
+        <!--<script src="https://cdn.jsdelivr.net/foundation/6.2.3/js/foundation.util.mediaQuery.js"></script>-->
+
+        <h:outputScript library="foundation-5/js/foundation" name="foundation.alert.js" />
+        <h:outputScript library="foundation-5/js/foundation" name="foundation.topbar.js" />
+        <h:outputScript library="foundation-5/js/foundation" name="foundation.orbit.js" />
+        
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        
+        <h:outputStylesheet library="css" name="app.css" />
+        <h:outputStylesheet library="css" name="toastr.css" />
+        <h:outputScript library="js" name="toastr.js" />
+        
+        <!--Import Google Icon Font-->
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        
+        <h:outputScript library="js" name="jquery.sticky.js" />
+        
+        <h:outputStylesheet library="css" name="animated.css" />
+        
+        
+    </h:head>
+    <h:body>
+        
+        <h:form id="commands">
+            <pe:remoteCommand name="add" actionListener="#{index.add}">
+                <pe:methodSignature parameters="java.lang.String" />
+                <pe:methodParam name="component" />
+            </pe:remoteCommand>
+            
+            <pe:remoteCommand name="update" actionListener="#{index.update}">
+                <pe:methodSignature parameters="java.lang.String" />
+                <pe:methodParam name="c" />
+            </pe:remoteCommand>
+            
+            <pe:remoteCommand name="newEntry" actionListener="#{index.newEntry}" />
+            <pe:remoteCommand name="save" actionListener="#{index.save}">
+                <pe:methodSignature parameters="java.lang.String,java.lang.String" />
+                <pe:methodParam name="title" />
+                <pe:methodParam name="content" />
+            </pe:remoteCommand>
+            
+        </h:form>
+        
+        <nav class="top-bar sticky" id="tool-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
+            <ul class="title-area">
+              <li class="name">
+                  <h1><a href="#{request.contextPath}/">Docky</a></h1>
+              </li>
+               <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+              <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+            </ul>
+
+            <section class="top-bar-section">
+              <!-- Right Nav Section -->
+              <ul class="right">
+                  <li><a href="#" onclick="newEntry()">New</a></li>
+                  <li><a href="#" onclick="validateEntry()">Save</a></li>
+          <!--      <li class="has-dropdown">
+                  <a href="#">Right Button Dropdown</a>
+                  <ul class="dropdown">
+                    <li><a href="#">First link in dropdown</a></li>
+                    <li class="active"><a href="#">Active link in dropdown</a></li>
+                  </ul>
+                </li>-->
+              </ul>
+              <div class="left">
+                <h:form id="title-form">
+                    <p:inputText value="#{index.title}" id="title" styleClass="input-transparent" placeholder="Title" style="width:500px;background-color: transparent;border:none; box-shadow: none; height:100%; color:white;" />
+                </h:form>
+              </div>
+            </section>
+          </nav>
+        
+        <div class="" style="margin-top: 20px;">
+            <div class="small-12 large-6 columns" style="position:relative;">
+                
+<!--                <nav class="top-bar sticky" data-sticky="true" style="background-color: #1976d2; position:relative; z-index: 9999 !important;" data-topbar="true" role="navigation">
+                    <ul class="title-area">
+                        Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone 
+                      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+                    </ul>
+
+                    <section class="top-bar-section">
+                       Right Nav Section 
+                      <ul class="right">
+                        <li class="has-dropdown">
+                          <a>Components</a>
+                          <ul class="dropdown">
+                              <li><a onclick="add('Code')">Code</a></li>
+                              <li><a onclick="add('Paragraph')">Paragraph</a></li>
+                              <li><a onclick="add('Image')">Image</a></li>
+                              <li><a onclick="add('Link')">Link</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                       Right Nav Section 
+                      <ul class="right">
+                        <li class="has-dropdown">
+                          <a href="#">Headers</a>
+                          <ul class="dropdown">
+                              <li><a onclick="add('Header1')">Header1</a></li>
+                              <li><a onclick="add('Header2')">Header2</a></li>
+                              <li><a onclick="add('Header3')">Header3</a></li>
+                              <li><a onclick="add('Header4')">Header4</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </section>
+                </nav>-->
+                <div class="callout" id="callout-components" style="padding:3px;position:relative; z-index: 0 !important; overflow: scroll;">
+                    <h:form id="components-form" style="margin-top:10px;">
+                            <ui:fragment rendered="#{empty index.components}">
+                                <h:graphicImage id="img_prev1" style="opacity: .1;" library="img" name="r.png" />
+                            </ui:fragment>
+                            <ui:repeat value="#{index.components}" var="c">
+                                <div class="callout-item" style="margin-top:10px;">
+                                    <ui:fragment rendered="#{c.tag.Name() eq 'Header1'}">
+                                        <div class="row">
+                                            <div class="columns small-12 large-11 input_c">
+                                                <p:inputText value="#{c.value}" style="border:none; box-shadow: none" placeholder="header1">
+                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                </p:inputText>
+                                            </div>
+                                            <div class="columns small-12 large-1">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                    <i class="material-icons">close</i>
+                                                </p:commandLink>
+                                            </div>
+                                        </div>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{c.tag.Name() eq 'Header2'}">
+                                        <div class="row">
+                                            <div class="columns small-12 large-11 input_c">
+                                                <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="header2">
+                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                </p:inputText>
+                                            </div>
+                                            <div class="columns small-12 large-1">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                    <i class="material-icons">close</i>
+                                                </p:commandLink>
+                                            </div>
+                                        </div>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{c.tag.Name() eq 'Header3'}">
+                                        <div class="row">
+                                            <div class="columns small-12 large-11 input_c">
+                                                <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="header3">
+                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                </p:inputText>
+                                            </div>
+                                            <div class="columns small-12 large-1">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                    <i class="material-icons">close</i>
+                                                </p:commandLink>
+                                            </div>
+                                        </div>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{c.tag.Name() eq 'Header4'}">
+                                        <div class="row">
+                                            <div class="columns small-12 large-11 input_c">
+                                                <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="header4">
+                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                </p:inputText>
+                                            </div>
+                                            <div class="columns small-12 large-1">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                    <i class="material-icons">close</i>
+                                                </p:commandLink>
+                                            </div>
+                                        </div>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{c.tag.Name() eq 'Paragraph'}">
+                                        <div class="row">
+                                            <div class="columns small-12 large-11 input_c">
+                                                <p:inputTextarea style="border:none; box-shadow: none" cols="20" value="#{c.value}" placeholder="paragraph">
+                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                </p:inputTextarea>
+                                            </div>
+                                            <div class="columns small-12 large-1">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                    <i class="material-icons">close</i>
+                                                </p:commandLink>
+                                            </div>
+                                        </div>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{c.tag.Name() eq 'Code'}">
+                                        <div class="row">
+                                            <div class="columns small-12 large-11 input_c">
+                                                <h:selectOneMenu id="languages-select" value="#{index.aux}">
+                                                    <p:ajax listener="#{index.setParam(c, 'class', index.aux)}" />
+                                                    <f:selectItem itemLabel="Select the language" itemValue="" noSelectionOption="true" />
+                                                    <f:selectItem itemLabel="Java" itemValue="java" />
+                                                    <f:selectItem itemLabel="Css" itemValue="css" />
+                                                    <f:selectItem itemLabel="HTML" itemValue="html" />
+                                                    <f:selectItem itemLabel="Javascript" itemValue="js" />
+                                                    <f:selectItem itemLabel="C#" itemValue="c#" />
+                                                    <f:selectItem itemLabel="PHP" itemValue="php" />
+                                                    <f:selectItem itemLabel="SQL" itemValue="sql" />
+                                                    <f:selectItem itemLabel="XML" itemValue="xml" />
+                                                </h:selectOneMenu>
+                                                <p:inputTextarea style="border:none; box-shadow: none;margin-top:10px;" cols="20" value="#{c.value}" placeholder="Code">
+                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                </p:inputTextarea>
+                                            </div>
+                                            <div class="columns small-12 large-1">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                    <i class="material-icons">close</i>
+                                                </p:commandLink>
+                                            </div>
+                                        </div>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{c.tag.Name() eq 'Image'}">
+                                        <div class="row">
+                                            <div class="columns small-12 large-11">
+                                                <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="Image URL">
+                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                </p:inputText>
+                                            </div>
+                                            <div class="columns small-12 large-1">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                    <i class="material-icons">close</i>
+                                                </p:commandLink>
+                                            </div>
+                                        </div>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{c.tag.Name() eq 'Link'}">
+                                        <div class="row">
+                                            <div class="columns small-12 large-11">
+                                                <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="URL">
+                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                </p:inputText>
+                                            </div>
+                                            <div class="columns small-12 large-1">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                    <i class="material-icons">close</i>
+                                                </p:commandLink>
+                                            </div>
+                                        </div>
+                                    </ui:fragment>
+                                </div>
+                            </ui:repeat>
+                    </h:form>
+                </div>
+                
+            </div>
+            <div class="small-12 large-6 columns">
+                
+                <div id="content-preview" style="overflow: scroll;">
+                    <h:form id="preview-form">
+                            <ui:fragment rendered="#{empty index.components}">
+                                <div style="color:#CCC;">
+                                    <h1>Preview</h1>
+                                    <p>
+                                        In this section you can checkout the changes of your edition
+                                    </p>
+                                    <h:graphicImage styleClass="animated slideInRight" id="img_prev2" library="img" style="max-width:300px; opacity:.2;" name="c.png" />
+                                </div>
+                            </ui:fragment>
+                            <div id="content-preview-final">
+                                <ui:repeat value="#{index.components}" var="com">
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header1'}">
+                                        <h1>#{com.value}</h1>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header2'}">
+                                        <h2>#{com.value}</h2>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header3'}">
+                                        <h3>#{com.value}</h3>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header4'}">
+                                        <h4>#{com.value}</h4>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Paragraph'}">
+                                        <p>#{com.value}</p>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Code'}">
+                                        <pre><code class="#{com.params.get('class')}">#{com.value}</code></pre>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Image'}">
+                                        <img class="#{com.params.get('class')}" src="#{com.value}" />
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Link'}">
+                                        <a href="#{com.value}">#{com.value}</a>
+                                    </ui:fragment>
+                                </ui:repeat>
+                            </div>
+                    </h:form>
+                </div>
+                <!--<br /><br /><br />-->
+            </div>
+        </div>
+        <div class="footerholder">
+            <div class="footer">
+                <nav class="top-bar sticky" data-sticky="true" style="background-color: #1976d2; position:relative; z-index: 9999 !important;" data-topbar="true" role="navigation">
+                    <ul class="title-area">
+                       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+                      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+                    </ul>
+                    
+                    <section class="top-bar-section">
+                        <!-- Right Nav Section -->
+                        <ul class="left">
+                            <li><a onclick="add('Code')">Code</a></li>
+                              <li><a onclick="add('Paragraph')">Paragraph</a></li>
+                              <li><a onclick="add('Image')">Image</a></li>
+                              <li><a onclick="add('Link')">Link</a></li>
+                              <li><a onclick="add('Header1')">Header1</a></li>
+                              <li><a onclick="add('Header2')">Header2</a></li>
+                              <li><a onclick="add('Header3')">Header3</a></li>
+                              <li><a onclick="add('Header4')">Header4</a></li>
+                    <!--      <li class="has-dropdown">
+                            <a href="#">Right Button Dropdown</a>
+                            <ul class="dropdown">
+                              <li><a href="#">First link in dropdown</a></li>
+                              <li class="active"><a href="#">Active link in dropdown</a></li>
+                            </ul>
+                          </li>-->
+                        </ul>
+                      </section>
+                </nav>
+            </div>
+        </div>
+        <script>
+            $(document).on("ready",function(){
+               $(document).foundation();
+               $("img[id='components-form:img_prev1']").fadeOut(6000);
+               $("img[id='preview-form:img_prev2']").fadeOut(6000)
+               function resize()
+                {
+                    var heights = window.innerHeight;
+                    document.getElementById("callout-components").style.height = (heights - 60);
+                    document.getElementById("content-preview").style.height = (heights - 60);
+                }
+//                resize();
+                $('#callout-components').height($(window).height() - $('.footerholder').height() - $('#tool-bar').height() - 50);
+                $('#content-preview').height($(window).height() - $('.footerholder').height() - $('#tool-bar').height() - 50);
+//                window.onresize = function() {
+//                    resize();
+//                };
+//               $("#callout-components").css({"height": $(document.body).height() - 80 + 'px'});
+//               $("#tool-bar").sticky({to$('#callout-components').height($(window).height() - $('.footerholder').height());pSpacing:0});
+//               $("#tool-bar").scroll(function(){
+//                  $(this).css({"z-index":"9999 !important"}); 
+//               });
+               $("pre").each(function (i, e) {
+                    hljs.highlightBlock(e);
+                });
+                $('#components-form input').on('paste', function () {
+                    var element = this;
+//                    alert('paste');
+                    setTimeout(function () {
+                      var text = $(element).val();
+                      // do something with text
+                        update(element);
+                    }, 100);
+                  });
+            });
+            
+            function validateEntry(){
+                save($('input[id="title-form:title"]').val(),$('#content-preview-final').html());
+            }
+        </script>
+    </h:body>
+</html>
+

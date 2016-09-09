@@ -183,6 +183,12 @@
                             <ul id="files">
                                 <!--<li ng-repeat="file in files">{{file}}</li>-->
                             </ul>
+                            <h:form enctype="multipart/form-data">
+                                <p:growl autoUpdate="true" />
+                                <p:fileUpload value="#{home.file}" mode="simple" skinSimple="true"/>
+
+                                <p:commandButton value="Submit" ajax="false" actionListener="#{home.upload}" />
+                            </h:form>
                         </div>
                     </div>
                 </div>
@@ -333,6 +339,7 @@
                 // Create an instance of Dropbox with the access token and use it to
                 // fetch and render the files in the users root directory.
                 var dbx = new Dropbox({ accessToken: getAccessTokenFromUrl() });
+                console.log(dbx);
                 dbx.filesListFolder({path: ''})
                   .then(function(response) {
                     renderItems(response.entries);

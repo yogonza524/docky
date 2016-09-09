@@ -40,9 +40,6 @@
         <!--<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />-->
         <!--<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />-->
         
-<!--        <f:metadata>
-            <f:event type="preRenderView" listener="# { home.updateView()}" />
-        </f:metadata>-->
     </h:head>
     <h:body>
         
@@ -145,7 +142,8 @@
                                     <p:commandLink value="#{entry.title}" actionListener="#{home.loadEntry(entry.id.idProject,entry.id.id)}" />
                                 </p:column>
                                 <p:column headerText="Action" width="200" style="border:none;text-align: center;"> 
-                                    <a href="#" onclick="removeEntry('#{project.id}','#{entry.id.id}','#{entry.title}')">Remove</a>
+                                    <a href="#" onclick="removeEntry('#{project.id}','#{entry.id.id}','#{entry.title}')">Remove</a> | 
+                                    <a href="#{request.contextPath}/faces/pages/edit_entry.xhtml?idProject=#{project.id}&amp;idEntry=#{entry.id.id}">Edit</a>
                                 </p:column>
                             </p:dataTable>
                         </ui:repeat>

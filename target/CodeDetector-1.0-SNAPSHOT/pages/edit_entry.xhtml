@@ -45,6 +45,11 @@
         
         <h:outputStylesheet library="css" name="animated.css" />
         
+        <f:metadata>
+            <f:viewParam name="idProject" value="#{edit.idProject}" />
+            <f:viewParam name="idEntry" value="#{edit.idEntry}" />
+            <f:event type="preRenderView" listener="#{edit.onload}" />
+        </f:metadata>
         
     </h:head>
     <h:body>
@@ -69,7 +74,7 @@
             
         </h:form>
         
-        <nav class="top-bar sticky" id="tool-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
+        <nav class="top-bar sticky animated zoomInUp" id="tool-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
             <ul class="title-area">
               <li class="name">
                   <h1><a href="#{request.contextPath}/">Docky</a></h1>
@@ -81,7 +86,7 @@
             <section class="top-bar-section">
               <!-- Right Nav Section -->
               <ul class="right">
-                  <li><a href="#" onclick="newEntry()">New</a></li>
+                  <!--<li><a href="#" onclick="newEntry()">New</a></li>-->
                   <li><a href="#" onclick="validateEntry()">Save</a></li>
           <!--      <li class="has-dropdown">
                   <a href="#">Right Button Dropdown</a>
@@ -93,7 +98,7 @@
               </ul>
               <div class="left">
                 <h:form id="title-form">
-                    <p:inputText value="#{index.title}" id="title" styleClass="input-transparent" placeholder="Title" style="width:500px;background-color: transparent;border:none; box-shadow: none; height:100%; color:white;" />
+                    <p:inputText value="#{edit.selected.title}" id="title" styleClass="input-transparent" placeholder="Title" style="width:500px;background-color: transparent;border:none; box-shadow: none; height:100%; color:white;" />
                 </h:form>
               </div>
             </section>
@@ -101,46 +106,12 @@
         
         <div class="" style="margin-top: 20px;">
             <div class="small-12 large-6 columns" style="position:relative;">
-                
-<!--                <nav class="top-bar sticky" data-sticky="true" style="background-color: #1976d2; position:relative; z-index: 9999 !important;" data-topbar="true" role="navigation">
-                    <ul class="title-area">
-                        Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone 
-                      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-                    </ul>
-
-                    <section class="top-bar-section">
-                       Right Nav Section 
-                      <ul class="right">
-                        <li class="has-dropdown">
-                          <a>Components</a>
-                          <ul class="dropdown">
-                              <li><a onclick="add('Code')">Code</a></li>
-                              <li><a onclick="add('Paragraph')">Paragraph</a></li>
-                              <li><a onclick="add('Image')">Image</a></li>
-                              <li><a onclick="add('Link')">Link</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                       Right Nav Section 
-                      <ul class="right">
-                        <li class="has-dropdown">
-                          <a href="#">Headers</a>
-                          <ul class="dropdown">
-                              <li><a onclick="add('Header1')">Header1</a></li>
-                              <li><a onclick="add('Header2')">Header2</a></li>
-                              <li><a onclick="add('Header3')">Header3</a></li>
-                              <li><a onclick="add('Header4')">Header4</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </section>
-                </nav>-->
                 <div class="callout" id="callout-components" style="padding:3px;position:relative; z-index: 0 !important; overflow: scroll;">
                     <h:form id="components-form" style="margin-top:10px;">
-                            <ui:fragment rendered="#{empty index.components}">
+                            <ui:fragment rendered="#{empty edit.components}">
                                 <h:graphicImage id="img_prev1" style="opacity: .1;" library="img" name="r.png" />
                             </ui:fragment>
-                            <ui:repeat value="#{index.components}" var="c">
+                            <ui:repeat value="#{edit.components}" var="c">
                                 <div class="callout-item" style="margin-top:10px;">
                                     <ui:fragment rendered="#{c.tag.Name() eq 'Header1'}">
                                         <div class="row">
@@ -276,7 +247,7 @@
                 
                 <div id="content-preview" style="overflow: scroll;">
                     <h:form id="preview-form">
-                            <ui:fragment rendered="#{empty index.components}">
+                            <ui:fragment rendered="#{empty edit.components}">
                                 <div style="color:#CCC;">
                                     <h1>Preview</h1>
                                     <p>
@@ -285,34 +256,32 @@
                                     <h:graphicImage styleClass="animated slideInRight" id="img_prev2" library="img" style="max-width:300px; opacity:.2;" name="c.png" />
                                 </div>
                             </ui:fragment>
-                            <div id="content-preview-final">
-                                <ui:repeat value="#{index.components}" var="com">
-                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header1'}">
-                                        <h1>#{com.value}</h1>
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header2'}">
-                                        <h2>#{com.value}</h2>
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header3'}">
-                                        <h3>#{com.value}</h3>
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header4'}">
-                                        <h4>#{com.value}</h4>
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{com.tag.Name() eq 'Paragraph'}">
-                                        <p>#{com.value}</p>
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{com.tag.Name() eq 'Code'}">
-                                        <pre><code class="#{com.params.get('class')}">#{com.value}</code></pre>
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{com.tag.Name() eq 'Image'}">
-                                        <img class="#{com.params.get('class')}" src="#{com.value}" />
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{com.tag.Name() eq 'Link'}">
-                                        <a href="#{com.value}">#{com.value}</a>
-                                    </ui:fragment>
-                                </ui:repeat>
-                            </div>
+                            <ui:repeat value="#{edit.components}" var="com">
+                                <ui:fragment rendered="#{com.tag.Name() eq 'Header1'}">
+                                    <h1>#{com.value}</h1>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{com.tag.Name() eq 'Header2'}">
+                                    <h2>#{com.value}</h2>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{com.tag.Name() eq 'Header3'}">
+                                    <h3>#{com.value}</h3>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{com.tag.Name() eq 'Header4'}">
+                                    <h4>#{com.value}</h4>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{com.tag.Name() eq 'Paragraph'}">
+                                    <p>#{com.value}</p>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{com.tag.Name() eq 'Code'}">
+                                    <pre><code class="#{com.params.get('class')}">#{com.value}</code></pre>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{com.tag.Name() eq 'Image'}">
+                                    <img class="#{com.params.get('class')}" src="#{com.value}" />
+                                </ui:fragment>
+                                <ui:fragment rendered="#{com.tag.Name() eq 'Link'}">
+                                    <a href="#{com.value}">#{com.value}</a>
+                                </ui:fragment>
+                            </ui:repeat>
                     </h:form>
                 </div>
                 <!--<br /><br /><br />-->
@@ -320,7 +289,7 @@
         </div>
         <div class="footerholder">
             <div class="footer">
-                <nav class="top-bar sticky animated zoomInDown" data-sticky="true" style="background-color: #1976d2; position:relative; z-index: 9999 !important;" data-topbar="true" role="navigation">
+                <nav class="top-bar sticky" data-sticky="true" style="background-color: #1976d2; position:relative; z-index: 9999 !important;" data-topbar="true" role="navigation">
                     <ul class="title-area">
                        <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
                       <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -386,7 +355,7 @@
             });
             
             function validateEntry(){
-                save($('input[id="title-form:title"]').val(),$('#content-preview-final').html());
+                save($('input[id="title-form:title"]').val(),$('#content-preview').html());
             }
         </script>
     </h:body>

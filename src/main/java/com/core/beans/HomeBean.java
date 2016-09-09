@@ -23,6 +23,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
@@ -45,7 +46,7 @@ public class HomeBean {
     private Entry entry;
     private String eid;
     private String pid;
-
+    
     public Entry getEntry() {
         return entry;
     }

@@ -45,6 +45,7 @@
         
         <h:outputStylesheet library="css" name="animated.css" />
         
+        
     </h:head>
     <h:body>
         
@@ -68,7 +69,7 @@
             
         </h:form>
         
-        <nav class="top-bar sticky animated zoomInUp" id="tool-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
+        <nav class="top-bar sticky" id="tool-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
             <ul class="title-area">
               <li class="name">
                   <h1><a href="#{request.contextPath}/">Docky</a></h1>
@@ -134,7 +135,7 @@
                       </ul>
                     </section>
                 </nav>-->
-                <div class="callout animated zoomIn" id="callout-components" style="padding:3px;position:relative; z-index: 0 !important; overflow: scroll;">
+                <div class="callout" id="callout-components" style="padding:3px;position:relative; z-index: 0 !important; overflow: scroll;">
                     <h:form id="components-form" style="margin-top:10px;">
                             <ui:fragment rendered="#{empty index.components}">
                                 <h:graphicImage id="img_prev1" style="opacity: .1;" library="img" name="r.png" />
@@ -284,32 +285,34 @@
                                     <h:graphicImage styleClass="animated slideInRight" id="img_prev2" library="img" style="max-width:300px; opacity:.2;" name="c.png" />
                                 </div>
                             </ui:fragment>
-                            <ui:repeat value="#{index.components}" var="com">
-                                <ui:fragment rendered="#{com.tag.Name() eq 'Header1'}">
-                                    <h1>#{com.value}</h1>
-                                </ui:fragment>
-                                <ui:fragment rendered="#{com.tag.Name() eq 'Header2'}">
-                                    <h2>#{com.value}</h2>
-                                </ui:fragment>
-                                <ui:fragment rendered="#{com.tag.Name() eq 'Header3'}">
-                                    <h3>#{com.value}</h3>
-                                </ui:fragment>
-                                <ui:fragment rendered="#{com.tag.Name() eq 'Header4'}">
-                                    <h4>#{com.value}</h4>
-                                </ui:fragment>
-                                <ui:fragment rendered="#{com.tag.Name() eq 'Paragraph'}">
-                                    <p>#{com.value}</p>
-                                </ui:fragment>
-                                <ui:fragment rendered="#{com.tag.Name() eq 'Code'}">
-                                    <pre><code class="#{com.params.get('class')}">#{com.value}</code></pre>
-                                </ui:fragment>
-                                <ui:fragment rendered="#{com.tag.Name() eq 'Image'}">
-                                    <img class="#{com.params.get('class')}" src="#{com.value}" />
-                                </ui:fragment>
-                                <ui:fragment rendered="#{com.tag.Name() eq 'Link'}">
-                                    <a href="#{com.value}">#{com.value}</a>
-                                </ui:fragment>
-                            </ui:repeat>
+                            <div id="content-preview-final">
+                                <ui:repeat value="#{index.components}" var="com">
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header1'}">
+                                        <h1>#{com.value}</h1>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header2'}">
+                                        <h2>#{com.value}</h2>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header3'}">
+                                        <h3>#{com.value}</h3>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Header4'}">
+                                        <h4>#{com.value}</h4>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Paragraph'}">
+                                        <p>#{com.value}</p>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Code'}">
+                                        <pre><code class="#{com.params.get('class')}">#{com.value}</code></pre>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Image'}">
+                                        <img class="#{com.params.get('class')}" src="#{com.value}" />
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{com.tag.Name() eq 'Link'}">
+                                        <a href="#{com.value}">#{com.value}</a>
+                                    </ui:fragment>
+                                </ui:repeat>
+                            </div>
                     </h:form>
                 </div>
                 <!--<br /><br /><br />-->
@@ -383,7 +386,7 @@
             });
             
             function validateEntry(){
-                save($('input[id="title-form:title"]').val(),$('#content-preview').html());
+                save($('input[id="title-form:title"]').val(),$('#content-preview-final').html());
             }
         </script>
     </h:body>

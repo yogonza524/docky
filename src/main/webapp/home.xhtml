@@ -37,8 +37,12 @@
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>-->
         
+        <script src="https://npmcdn.com/dropbox/dist/Dropbox-sdk.min.js"></script>
         <!--<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />-->
         <!--<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />-->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+        
+        <h:outputScript library="js" name="utils.js" />
         
     </h:head>
     <h:body>
@@ -96,8 +100,8 @@
         <ul class="tabs" data-tab="true">
             <li class="tab-title active"><a id="projects_link" href="#panel1">Projects</a></li>
             <li class="tab-title"><a id="new_project_btn" href="#panel2">New Project</a></li>
-            <li class="tab-title"><a href="#panel3">About</a></li>
-            <!--<li class="tab-title"><a href="#panel4">Tab 4</a></li>-->
+            <li class="tab-title"><a href="#panel4">Files</a></li>
+            <li class="tab-title"><a href="#panel3">About</a></li>            
           </ul>
           <div class="tabs-content">
             <div class="content active" id="panel1">
@@ -170,6 +174,19 @@
                 </h:form>
             </div>
             </div>
+              <!--ng-app="files" ng-controller="filesController"-->
+            <div class="content" id="panel4">
+                <div class="panel">
+                    <div class="row">
+                        <div class="columns small-12">
+                            <a href="#" id="authlink">Auth</a>
+                            <ul id="files">
+                                <!--<li ng-repeat="file in files">{{file}}</li>-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="content" id="panel3">
                 <div class="panel">
                     <h5>Docky is powered by Gonzalo H. Mendoza</h5>
@@ -184,9 +201,6 @@
                     </p>
                 </div>
             </div>
-<!--            <div class="content" id="panel4">
-              <p>This is the fourth panel of the basic tab example. This is the fourth panel of the basic tab example.</p>
-            </div>-->
           </div>
         
         <div class="footerholder">
@@ -257,5 +271,85 @@
                   });
             }
         </script>
+        
+        <!--Dropbox Script-->
+        <script>
+            
+            var app = angular.module('files', []);
+//            app.controller('filesController', function($scope) {
+//                
+//                $scope.files = [];
+//                
+//                $scope.displayFiles = function(files){
+//                    for(var i = 0; i &lt; files.length; i++) {
+//                       $scope.files.push({
+//                          "file" :  files[i].name
+//                       });
+//                    };
+//                };
+//                
+//                $scope.listFiles = function(){
+//                    var ACCESS_TOKEN = 'W5fFi5lAQOUAAAAAAAAXe7VbWxsod9L3bHJWeGzaE3GE5OzUbKx0-t-01zS9IEK7';
+//                    var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
+//                    dbx.filesListFolder({path: ''})
+//                      .then(function(response) {
+//                        $scope.displayFiles(response.entries);
+//                      })
+//                      .catch(function(error) {
+//                        alert(error);
+//                      });
+//                    return false;
+//                };
+//                
+//                $scope.listFiles();
+//                
+//            });
+
+            var CLIENT_ID = 'f7kd2mzd83fnwbc';
+            // Parses the url and gets the access token if it is in the urls hash
+            function getAccessTokenFromUrl() {
+             return utils.parseQueryString(window.location.hash).access_token;
+            }
+            // If the user was just redirected from authenticating, the urls hash will
+            // contain the access token.
+            function isAuthenticated() {
+              return !!getAccessTokenFromUrl();
+            }
+            
+            // Render a list of items to #files
+            function renderItems(items) {
+              var filesContainer = document.getElementById('files');
+              items.forEach(function(item) {
+                var li = document.createElement('li');
+                li.innerHTML = item.name;
+                console.log(item);
+                filesContainer.appendChild(li);
+              });
+            }
+            
+            function evalAuth(){
+            if (isAuthenticated()) {
+                $("#authlink").hide();
+                // Create an instance of Dropbox with the access token and use it to
+                // fetch and render the files in the users root directory.
+                var dbx = new Dropbox({ accessToken: getAccessTokenFromUrl() });
+                dbx.filesListFolder({path: ''})
+                  .then(function(response) {
+                    renderItems(response.entries);
+                  })
+                  .catch(function(error) {
+                    alert(error);
+                  });
+              } else {
+                // Set the login anchors href using dbx.getAuthenticationUrl()
+                var dbx = new Dropbox({ clientId: CLIENT_ID });
+                var authUrl = dbx.getAuthenticationUrl('http://localhost:8080/docky/faces/home.xhtml');
+                document.getElementById('authlink').href = authUrl;
+              }
+            }
+            
+            evalAuth();
+            
+          </script>
     </h:body>
 </html>

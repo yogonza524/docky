@@ -93,5 +93,10 @@ public class Component implements Serializable{
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Component{" + "id=" + id + ", tag=" + tag + ", value=" + value + ", params=" + params + '}';
+    }
     
 }

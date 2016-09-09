@@ -55,26 +55,20 @@
     <h:body>
         
         <h:form id="commands">
-            <pe:remoteCommand name="add" actionListener="#{index.add}">
+            
+            <pe:remoteCommand name="add" actionListener="#{edit.add}">
                 <pe:methodSignature parameters="java.lang.String" />
                 <pe:methodParam name="component" />
             </pe:remoteCommand>
             
-            <pe:remoteCommand name="update" actionListener="#{index.update}">
+            <pe:remoteCommand name="updateEntry" actionListener="#{edit.updateEntry}">
                 <pe:methodSignature parameters="java.lang.String" />
-                <pe:methodParam name="c" />
-            </pe:remoteCommand>
-            
-            <pe:remoteCommand name="newEntry" actionListener="#{index.newEntry}" />
-            <pe:remoteCommand name="save" actionListener="#{index.save}">
-                <pe:methodSignature parameters="java.lang.String,java.lang.String" />
-                <pe:methodParam name="title" />
                 <pe:methodParam name="content" />
             </pe:remoteCommand>
             
         </h:form>
         
-        <nav class="top-bar sticky animated zoomInUp" id="tool-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
+        <nav class="top-bar sticky" id="tool-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
             <ul class="title-area">
               <li class="name">
                   <h1><a href="#{request.contextPath}/">Docky</a></h1>
@@ -117,11 +111,11 @@
                                         <div class="row">
                                             <div class="columns small-12 large-11 input_c">
                                                 <p:inputText value="#{c.value}" style="border:none; box-shadow: none" placeholder="header1">
-                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                    <p:ajax event="keyup" listener="#{edit.update(c)}" />
                                                 </p:inputText>
                                             </div>
                                             <div class="columns small-12 large-1">
-                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{edit.remove(c)}">
                                                     <i class="material-icons">close</i>
                                                 </p:commandLink>
                                             </div>
@@ -131,11 +125,11 @@
                                         <div class="row">
                                             <div class="columns small-12 large-11 input_c">
                                                 <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="header2">
-                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                    <p:ajax event="keyup" listener="#{edit.update(c)}" />
                                                 </p:inputText>
                                             </div>
                                             <div class="columns small-12 large-1">
-                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{edit.remove(c)}">
                                                     <i class="material-icons">close</i>
                                                 </p:commandLink>
                                             </div>
@@ -145,11 +139,11 @@
                                         <div class="row">
                                             <div class="columns small-12 large-11 input_c">
                                                 <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="header3">
-                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                    <p:ajax event="keyup" listener="#{edit.update(c)}" />
                                                 </p:inputText>
                                             </div>
                                             <div class="columns small-12 large-1">
-                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{edit.remove(c)}">
                                                     <i class="material-icons">close</i>
                                                 </p:commandLink>
                                             </div>
@@ -159,11 +153,11 @@
                                         <div class="row">
                                             <div class="columns small-12 large-11 input_c">
                                                 <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="header4">
-                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                    <p:ajax event="keyup" listener="#{edit.update(c)}" />
                                                 </p:inputText>
                                             </div>
                                             <div class="columns small-12 large-1">
-                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{edit.remove(c)}">
                                                     <i class="material-icons">close</i>
                                                 </p:commandLink>
                                             </div>
@@ -173,11 +167,11 @@
                                         <div class="row">
                                             <div class="columns small-12 large-11 input_c">
                                                 <p:inputTextarea style="border:none; box-shadow: none" cols="20" value="#{c.value}" placeholder="paragraph">
-                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                    <p:ajax event="keyup" listener="#{edit.update(c)}" />
                                                 </p:inputTextarea>
                                             </div>
                                             <div class="columns small-12 large-1">
-                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{edit.remove(c)}">
                                                     <i class="material-icons">close</i>
                                                 </p:commandLink>
                                             </div>
@@ -186,8 +180,8 @@
                                     <ui:fragment rendered="#{c.tag.Name() eq 'Code'}">
                                         <div class="row">
                                             <div class="columns small-12 large-11 input_c">
-                                                <h:selectOneMenu id="languages-select" value="#{index.aux}">
-                                                    <p:ajax listener="#{index.setParam(c, 'class', index.aux)}" />
+                                                <h:selectOneMenu id="languages-select" value="#{edit.aux}">
+                                                    <p:ajax listener="#{edit.setParam(c, 'class', edit.aux)}" />
                                                     <f:selectItem itemLabel="Select the language" itemValue="" noSelectionOption="true" />
                                                     <f:selectItem itemLabel="Java" itemValue="java" />
                                                     <f:selectItem itemLabel="Css" itemValue="css" />
@@ -199,11 +193,11 @@
                                                     <f:selectItem itemLabel="XML" itemValue="xml" />
                                                 </h:selectOneMenu>
                                                 <p:inputTextarea style="border:none; box-shadow: none;margin-top:10px;" cols="20" value="#{c.value}" placeholder="Code">
-                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                    <p:ajax event="keyup" listener="#{edit.update(c)}" />
                                                 </p:inputTextarea>
                                             </div>
                                             <div class="columns small-12 large-1">
-                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{edit.remove(c)}">
                                                     <i class="material-icons">close</i>
                                                 </p:commandLink>
                                             </div>
@@ -213,11 +207,11 @@
                                         <div class="row">
                                             <div class="columns small-12 large-11">
                                                 <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="Image URL">
-                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                    <p:ajax event="keyup" listener="#{edit.update(c)}" />
                                                 </p:inputText>
                                             </div>
                                             <div class="columns small-12 large-1">
-                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{edit.remove(c)}">
                                                     <i class="material-icons">close</i>
                                                 </p:commandLink>
                                             </div>
@@ -227,11 +221,11 @@
                                         <div class="row">
                                             <div class="columns small-12 large-11">
                                                 <p:inputText style="border:none; box-shadow: none" value="#{c.value}" placeholder="URL">
-                                                    <p:ajax event="keyup" listener="#{index.update(c)}" />
+                                                    <p:ajax event="keyup" listener="#{edit.update(c)}" />
                                                 </p:inputText>
                                             </div>
                                             <div class="columns small-12 large-1">
-                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{index.remove(c)}">
+                                                <p:commandLink title="Remove" style="margin-top:10px;" actionListener="#{edit.remove(c)}">
                                                     <i class="material-icons">close</i>
                                                 </p:commandLink>
                                             </div>
@@ -355,7 +349,7 @@
             });
             
             function validateEntry(){
-                save($('input[id="title-form:title"]').val(),$('#content-preview').html());
+                updateEntry($('#content-preview').html());
             }
         </script>
     </h:body>

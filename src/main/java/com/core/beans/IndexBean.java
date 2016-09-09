@@ -154,7 +154,6 @@ public class IndexBean {
     }
     
     public void save(String title, String content) throws IOException, InterruptedException{
-        System.out.println("Content: " + content);
         if (title != null && !title.isEmpty()) {
             if (content != null && !content.isEmpty()) {
                 Entry e = new Entry();

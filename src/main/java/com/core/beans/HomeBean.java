@@ -352,7 +352,7 @@ public class HomeBean {
         if (f.exists()) {
             if (f.delete()) {
                 showMessageSuccess("Success", "File deleted");
-                listFilesForFolder(new File(directory));
+                listFiles();
                 update("list_files");
             }
             else{

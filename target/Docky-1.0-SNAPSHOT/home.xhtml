@@ -71,6 +71,11 @@
                 <pe:methodParam name="eid" />
             </pe:remoteCommand>
             
+            <pe:remoteCommand name="removeFile" actionListener="#{home.removeFile}">
+                <pe:methodSignature parameters="java.lang.String" />
+                <pe:methodParam name="fileName" />
+            </pe:remoteCommand>
+            
         </h:form>
         
         <nav class="top-bar" style="background-color: #1976d2;" data-topbar="true" role="navigation">
@@ -187,11 +192,16 @@
 
                     <h:form id="list_files">
                         <div class="row" data-equalizer="true">
+                            <ui:fragment rendered="#{empty home.files}">
+                                <div class="columns small-12" style="text-align: center; ">
+                                    <h:graphicImage style="max-width: 400px; opacity: .7;" library="img" name="box.png" />
+                                </div>
+                            </ui:fragment>
                             <ui:repeat value="#{home.files}" var="file">
                                 <ui:fragment rendered="#{file.contentType eq 'application/zip'}">
                                     <div class="columns small-12 large-3 file-column" data-equalizer-watch="true">
                                         <ul class="pricing-table" style="position:relative;">
-                                            <li class="title" title="#{file.name}">#{home.subString(file.name)} <a href="" class="btn_remove">x</a></li>
+                                            <li class="title" style="background-color: #42a5f5;" title="#{file.name}">#{home.subString(file.name)} <a href="" onclick="removeFile('#{file.name}')" class="btn_remove">x</a></li>
                                             <li class="price">
                                                 <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
                                                     <p:fileDownload value="#{file}" />
@@ -205,7 +215,7 @@
                                 <ui:fragment rendered="#{file.contentType eq 'image/png'}">
                                     <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
                                         <ul class="pricing-table" style="position:relative;">
-                                            <li class="title" title="#{file.name}">#{home.subString(file.name)} <a href="" class="btn_remove">x</a></li>
+                                            <li class="title" style="background-color: #42a5f5;" title="#{file.name}">#{home.subString(file.name)} <a href="" onclick="removeFile('#{file.name}')" class="btn_remove">x</a></li>
                                             <li class="price">
                                                 <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
                                                     <p:fileDownload value="#{file}" />
@@ -218,7 +228,7 @@
                                 <ui:fragment rendered="#{file.contentType eq 'application/pdf'}">
                                     <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
                                         <ul class="pricing-table" style="position:relative;">
-                                            <li class="title" title="#{file.name}">#{home.subString(file.name)} <a href="" class="btn_remove">x</a></li>
+                                            <li class="title" style="background-color: #42a5f5;" title="#{file.name}">#{home.subString(file.name)} <a href="" onclick="removeFile('#{file.name}')" class="btn_remove">x</a></li>
                                             <li class="price">
                                                 <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
                                                     <p:fileDownload value="#{file}" />
@@ -231,7 +241,7 @@
                                 <ui:fragment rendered="#{file.contentType eq 'video/mp4'}">
                                     <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
                                         <ul class="pricing-table" style="position:relative;">
-                                            <li class="title" title="#{file.name}">#{home.subString(file.name)} <a href="" class="btn_remove">x</a></li>
+                                            <li class="title" style="background-color: #42a5f5;" title="#{file.name}">#{home.subString(file.name)} <a href="" onclick="removeFile('#{file.name}')" class="btn_remove">x</a></li>
                                             <li class="price">
                                                 <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
                                                     <p:fileDownload value="#{file}" />
@@ -244,7 +254,7 @@
                                 <ui:fragment rendered="#{file.contentType eq 'application/x-java-archive'}">
                                     <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
                                         <ul class="pricing-table" style="position:relative;">
-                                            <li class="title" title="#{file.name}">#{home.subString(file.name)} <a href="" class="btn_remove">x</a></li>
+                                            <li class="title" style="background-color: #42a5f5;" title="#{file.name}">#{home.subString(file.name)} <a href="" onclick="removeFile('#{file.name}')" class="btn_remove">x</a></li>
                                             <li class="price">
                                                 <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
                                                     <p:fileDownload value="#{file}" />
@@ -254,7 +264,46 @@
                                         </ul>
                                     </div>
                                 </ui:fragment>
-                            </ui:repeat>  
+                                <ui:fragment rendered="#{file.contentType eq 'image/jpeg'}">
+                                    <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
+                                        <ul class="pricing-table" style="position:relative;">
+                                            <li class="title" style="background-color: #42a5f5;" title="#{file.name}">#{home.subString(file.name)} <a href="" onclick="removeFile('#{file.name}')" class="btn_remove">x</a></li>
+                                            <li class="price">
+                                                <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
+                                                    <p:fileDownload value="#{file}" />
+                                                    <p:graphicImage library="img" name="jpg.png" />
+                                                </p:commandLink>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{file.contentType eq 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}">
+                                    <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
+                                        <ul class="pricing-table" style="position:relative;">
+                                            <li class="title" style="background-color: #42a5f5;" title="#{file.name}">#{home.subString(file.name)} <a href="" onclick="removeFile('#{file.name}')" class="btn_remove">x</a></li>
+                                            <li class="price">
+                                                <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
+                                                    <p:fileDownload value="#{file}" />
+                                                    <p:graphicImage library="img" name="word.png" />
+                                                </p:commandLink>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{file.contentType eq 'application/x-shellscript'}">
+                                    <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
+                                        <ul class="pricing-table" style="position:relative;">
+                                            <li class="title" style="background-color: #42a5f5;" title="#{file.name}">#{home.subString(file.name)} <a href="" onclick="removeFile('#{file.name}')" class="btn_remove">x</a></li>
+                                            <li class="price">
+                                                <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
+                                                    <p:fileDownload value="#{file}" />
+                                                    <p:graphicImage library="img" name="sh.png" />
+                                                </p:commandLink>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ui:fragment>
+                            </ui:repeat>
                         </div>
                     </h:form>
                 </div>

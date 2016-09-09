@@ -297,7 +297,7 @@ public class HomeBean {
             }
         }
         else{
-            System.out.println("File null!");
+            showMessageError("File not selected", "Please select a file");
         }
     }
     
@@ -345,5 +345,22 @@ public class HomeBean {
             output = name.substring(0,10) + "...";
         }
         return output;
+    }
+    
+    public void removeFile(String name) throws IOException{
+        File f = new File(directory + "/" + name);
+        if (f.exists()) {
+            if (f.delete()) {
+                showMessageSuccess("Success", "File deleted");
+                listFilesForFolder(new File(directory));
+                update("list_files");
+            }
+            else{
+                showMessageError("Exception", "The file could not be deleted");
+            }
+        }
+        else{
+            showMessageError("Problemas deleting", "The file doesn't exist");
+        }
     }
 }

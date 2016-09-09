@@ -189,27 +189,66 @@
                         <div class="row" data-equalizer="true">
                             <ui:repeat value="#{home.files}" var="file">
                                 <ui:fragment rendered="#{file.contentType eq 'application/zip'}">
-                                    <div class="columns small-12 large-3" data-equalizer-watch="true">
-                                        <ul class="pricing-table">
-                                            <li class="title" title="#{file.name}">#{home.subString(file.name)}</li>
+                                    <div class="columns small-12 large-3 file-column" data-equalizer-watch="true">
+                                        <ul class="pricing-table" style="position:relative;">
+                                            <li class="title" title="#{file.name}">#{home.subString(file.name)} <a href="" class="btn_remove">x</a></li>
                                             <li class="price">
-                                                <p:commandLink styleClass="th" ajax="false" >
+                                                <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
                                                     <p:fileDownload value="#{file}" />
                                                     <h:graphicImage library="img" name="zip_grande.png" />
                                                 </p:commandLink>
                                             </li>
-                                          </ul>
+                                        </ul>
                                     </div>
                                     <!--# { file.name}-->
                                 </ui:fragment>
                                 <ui:fragment rendered="#{file.contentType eq 'image/png'}">
-                                    <div class="columns small-12 large-3" data-equalizer-watch="true">
-                                        <ul class="pricing-table">
-                                            <li class="title" title="#{file.name}">#{home.subString(file.name)}</li>
+                                    <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
+                                        <ul class="pricing-table" style="position:relative;">
+                                            <li class="title" title="#{file.name}">#{home.subString(file.name)} <a href="" class="btn_remove">x</a></li>
                                             <li class="price">
-                                                <p:commandLink styleClass="th" ajax="false" >
+                                                <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
                                                     <p:fileDownload value="#{file}" />
                                                     <p:graphicImage library="img" name="png.png" />
+                                                </p:commandLink>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{file.contentType eq 'application/pdf'}">
+                                    <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
+                                        <ul class="pricing-table" style="position:relative;">
+                                            <li class="title" title="#{file.name}">#{home.subString(file.name)} <a href="" class="btn_remove">x</a></li>
+                                            <li class="price">
+                                                <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
+                                                    <p:fileDownload value="#{file}" />
+                                                    <p:graphicImage library="img" name="pdf.png" />
+                                                </p:commandLink>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{file.contentType eq 'video/mp4'}">
+                                    <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
+                                        <ul class="pricing-table" style="position:relative;">
+                                            <li class="title" title="#{file.name}">#{home.subString(file.name)} <a href="" class="btn_remove">x</a></li>
+                                            <li class="price">
+                                                <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
+                                                    <p:fileDownload value="#{file}" />
+                                                    <p:graphicImage library="img" name="mp4.png" />
+                                                </p:commandLink>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{file.contentType eq 'application/x-java-archive'}">
+                                    <div class="columns small-12 large-3 file-column" style="position:relative;" data-equalizer-watch="true">
+                                        <ul class="pricing-table" style="position:relative;">
+                                            <li class="title" title="#{file.name}">#{home.subString(file.name)} <a href="" class="btn_remove">x</a></li>
+                                            <li class="price">
+                                                <p:commandLink title="#{file.name}" styleClass="th" ajax="false" >
+                                                    <p:fileDownload value="#{file}" />
+                                                    <p:graphicImage library="img" name="java.png" />
                                                 </p:commandLink>
                                             </li>
                                         </ul>

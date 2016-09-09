@@ -97,3 +97,10 @@ input[type="text"].input-transparent:-ms-input-placeholder  {
 	position:relative;
 	top:1px;
 }
+
+.btn_remove{
+    position:absolute;
+    top:5px;
+    right: 8px;
+    color:white;
+}
